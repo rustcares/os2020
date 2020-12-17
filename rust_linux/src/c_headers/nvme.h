@@ -104,7 +104,7 @@ enum {
 	NVME_REQ_CANCELLED		= (1 << 0),
 };
 
-static inline struct nvme_request *nvme_req(struct request *req)
+struct nvme_request *nvme_req(struct request *req)
 {
 	return blk_mq_rq_to_pdu(req);
 }
@@ -296,7 +296,7 @@ struct nvme_ctrl_ops {
 	int (*reinit_request)(void *data, struct request *rq);
 };
 
-static inline bool nvme_ctrl_ready(struct nvme_ctrl *ctrl)
+bool nvme_ctrl_ready(struct nvme_ctrl *ctrl)
 {
 	u32 val = 0;
 
@@ -305,19 +305,19 @@ static inline bool nvme_ctrl_ready(struct nvme_ctrl *ctrl)
 	return val & NVME_CSTS_RDY;
 }
 
-static inline int nvme_reset_subsystem(struct nvme_ctrl *ctrl)
+int nvme_reset_subsystem(struct nvme_ctrl *ctrl)
 {
 	if (!ctrl->subsystem)
 		return -ENOTTY;
 	return ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, 0x4E564D65);
 }
 
-static inline u64 nvme_block_nr(struct nvme_ns *ns, sector_t sector)
+u64 nvme_block_nr(struct nvme_ns *ns, sector_t sector)
 {
 	return (sector >> (ns->lba_shift - 9));
 }
 
-static inline void nvme_cleanup_cmd(struct request *req)
+void nvme_cleanup_cmd(struct request *req)
 {
 	if (req->rq_flags & RQF_SPECIAL_PAYLOAD) {
 		kfree(page_address(req->special_vec.bv_page) +
@@ -325,7 +325,7 @@ static inline void nvme_cleanup_cmd(struct request *req)
 	}
 }
 
-static inline void nvme_end_request(struct request *req, __le16 status,
+void nvme_end_request(struct request *req, __le16 status,
 		union nvme_result result)
 {
 	struct nvme_request *rq = nvme_req(req);
@@ -335,12 +335,12 @@ static inline void nvme_end_request(struct request *req, __le16 status,
 	blk_mq_complete_request(req);
 }
 
-static inline void nvme_get_ctrl(struct nvme_ctrl *ctrl)
+void nvme_get_ctrl(struct nvme_ctrl *ctrl)
 {
 	get_device(ctrl->device);
 }
 
-static inline void nvme_put_ctrl(struct nvme_ctrl *ctrl)
+void nvme_put_ctrl(struct nvme_ctrl *ctrl)
 {
 	put_device(ctrl->device);
 }
@@ -401,11 +401,11 @@ extern const struct block_device_operations nvme_ns_head_ops;
 static inline void nvme_failover_req(struct request *req)
 {
 }
-static inline bool nvme_req_needs_failover(struct request *req)
+ bool nvme_req_needs_failover(struct request *req)
 {
 	return false;
 }
-static inline void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
+ void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
 {
 }
 static inline int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl,

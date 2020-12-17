@@ -86,7 +86,7 @@ extern "C" fn nvme_complete_rq (req: *mut bindings::request)  {
 
 }
 */
-
+/*
 extern	"C" fn nvme_complete_rq_foo() {
 
 	unsafe { 
@@ -94,7 +94,7 @@ extern	"C" fn nvme_complete_rq_foo() {
 	 };
 
 }
-
+*/
 
 //extern "C" fn mount_callback<T: FileSystem>(
 //    fs_type: *mut bindings::file_system_type,

@@ -1,0 +1,1 @@
+cmd_/home/jy/os2020/rust_linux/hello-world/helloworld.ko := ld -r -m elf_x86_64 -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/jy/os2020/rust_linux/hello-world/helloworld.ko /home/jy/os2020/rust_linux/hello-world/helloworld.o /home/jy/os2020/rust_linux/hello-world/helloworld.mod.o ;  true

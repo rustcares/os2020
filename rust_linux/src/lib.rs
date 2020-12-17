@@ -41,6 +41,34 @@ pub use crate::types::{CStr, Mode};
 ///     description: b"My very own kernel module!",
 ///     license: b"GPL"
 /// );
+
+
+
+
+
+
+extern "C" {
+
+    fn bug_helper() -> !;
+//   fn nvme_reset_ctrl( ctrl : *mut bindings::nvme_ctrl ) -> c_types::c_int;
+//    fn nvme_delete_ctrl_work( work : *mut bindings::work_struct) -> !;
+
+    fn nvme_core_init() -> !;
+    fn nvme_core_exit() -> !;
+}
+
+pub fn nvme_init_fn() -> ! {
+    unsafe {
+        nvme_core_init();
+    }
+}
+
+pub fn nvme_exit_fn() -> ! {
+ unsafe {
+        nvme_core_exit();
+    }
+}
+
 #[macro_export]
 macro_rules! kernel_module {
     ($module:ty, $($name:ident : $value:expr),*) => {
@@ -50,6 +78,7 @@ macro_rules! kernel_module {
             match <$module as $crate::KernelModule>::init() {
                 Ok(m) => {
                     unsafe {
+			$crate::nvme_init_fn();
                         __MOD = Some(m);
                     }
                     return 0;
@@ -64,7 +93,9 @@ macro_rules! kernel_module {
         pub extern "C" fn cleanup_module() {
             unsafe {
                 // Invokes drop() on __MOD, which should be used for cleanup.
-                __MOD = None;
+  
+		$crate::nvme_exit_fn();
+              __MOD = None;
             }
         }
 
@@ -132,9 +163,6 @@ pub trait KernelModule: Sized + Sync {
     fn init() -> KernelResult<Self>;
 }
 
-extern "C" {
-    fn bug_helper() -> !;
-}
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {

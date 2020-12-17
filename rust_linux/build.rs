@@ -53,6 +53,14 @@ const OPAQUE_TYPES: &[&str] = &[
     // and https://github.com/rust-lang/rust-bindgen/issues/1538
     "desc_struct",
     "xregs_state",
+"nvme_ctrl",
+//"nvme_ns",
+//"work_struct",
+//"request",
+//"kref",
+
+
+
 ];
 
 fn handle_kernel_version_cfg(bindings_path: &PathBuf) {
