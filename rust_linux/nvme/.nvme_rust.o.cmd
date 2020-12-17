@@ -1,0 +1,1 @@
+cmd_/home/jy/os2020/rust_linux/nvme/nvme_rust.o := ld -m elf_x86_64 -z max-page-size=0x200000   -r -o /home/jy/os2020/rust_linux/nvme/nvme_rust.o /home/jy/os2020/rust_linux/nvme/nvme_rust.rust.o 
