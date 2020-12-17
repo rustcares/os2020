@@ -188,8 +188,16 @@ static inline bool nvme_req_needs_retry(struct request *req)
 	return true;
 }
 
+
+extern void nvme_complete_rq_foo();
+
+
+
 void nvme_complete_rq(struct request *req)
 {
+
+	nvme_complete_rq_foo();
+
 	if (unlikely(nvme_req(req)->status && nvme_req_needs_retry(req))) {
 		if (nvme_req_needs_failover(req)) {
 			nvme_failover_req(req);
@@ -206,6 +214,10 @@ void nvme_complete_rq(struct request *req)
 	blk_mq_end_request(req, nvme_error_status(req));
 }
 EXPORT_SYMBOL_GPL(nvme_complete_rq);
+
+
+
+
 
 void nvme_cancel_request(struct request *req, void *data, bool reserved)
 {
