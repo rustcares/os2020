@@ -50,24 +50,39 @@ pub use crate::types::{CStr, Mode};
 extern "C" {
 
     fn bug_helper() -> !;
-//   fn nvme_reset_ctrl( ctrl : *mut bindings::nvme_ctrl ) -> c_types::c_int;
-//    fn nvme_delete_ctrl_work( work : *mut bindings::work_struct) -> !;
-
+    fn nvme_init() -> c_types::c_int;
+    fn nvme_exit() -> !;
     fn nvme_core_init() -> !;
     fn nvme_core_exit() -> !;
 }
 
-pub fn nvme_init_fn() -> ! {
+pub fn nvme_core_init_fn() -> ! {
     unsafe {
         nvme_core_init();
     }
 }
 
-pub fn nvme_exit_fn() -> ! {
+pub fn nvme_core_exit_fn() -> ! {
  unsafe {
         nvme_core_exit();
     }
 }
+
+pub fn nvme_init_fn() -> c_types::c_int {
+    unsafe {
+        return nvme_init()
+    }
+}
+
+pub fn nvme_exit_fn() -> ! {
+ unsafe {
+        nvme_exit();
+    }
+}
+
+
+
+
 
 #[macro_export]
 macro_rules! kernel_module {

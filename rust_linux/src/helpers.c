@@ -5952,6 +5952,7 @@ out:
 	nvme_change_ctrl_state(&dev->ctrl, NVME_CTRL_RESETTING);
 	dev_info(dev->ctrl.device, "pci function %s\n", dev_name(&pdev->dev));
 
+
 	queue_work(nvme_wq, &dev->ctrl.reset_work);
 	return 0;
 
@@ -6144,7 +6145,7 @@ out:
 };
 MODULE_DEVICE_TABLE(pci, nvme_id_table);
 
-  struct pci_driver nvme_driver = {
+struct pci_driver nvme_driver = {
 	.name		= "nvme",
 	.id_table	= nvme_id_table,
 	.probe		= nvme_probe,
@@ -6157,15 +6158,18 @@ MODULE_DEVICE_TABLE(pci, nvme_id_table);
 	.err_handler	= &nvme_err_handler,
 };
 
-//  int __init nvme_init(void)
-//{
-//	return pci_register_driver(&nvme_driver);
-//}
+#define KBUILD_MODNAME "rustnvme"
+int __init nvme_init(void)
+{
 
-//  void __exit nvme_exit(void)
-//{
-//	pci_unregister_driver(&nvme_driver);
-//	flush_workqueue(nvme_wq);
-//	_nvme_check_size();
-//}
+	nvme_core_init();
+	return pci_register_driver(&nvme_driver);
+}
+
+void __exit nvme_exit(void)
+{
+	pci_unregister_driver(&nvme_driver);
+	flush_workqueue(nvme_wq);
+	_nvme_check_size();
+}
 
