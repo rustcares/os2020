@@ -22,38 +22,13 @@ pub mod user_ptr;
 pub use crate::error::{Error, KernelResult};
 pub use crate::types::{CStr, Mode};
 
-/// Declares the entrypoint for a kernel module. The first argument should be a type which
-/// implements the [`KernelModule`] trait. Also accepts various forms of kernel metadata.
-///
-/// Example:
-/// ```rust,no_run
-/// use linux_kernel_module;
-/// struct MyKernelModule;
-/// impl linux_kernel_module::KernelModule for MyKernelModule {
-///     fn init() -> linux_kernel_module::KernelResult<Self> {
-///         Ok(MyKernelModule)
-///     }
-/// }
-///
-/// linux_kernel_module::kernel_module!(
-///     MyKernelModule,
-///     author: b"Fish in a Barrel Contributors",
-///     description: b"My very own kernel module!",
-///     license: b"GPL"
-/// );
-
-
-
-
 
 // Use C functions in Rust //
 extern "C" {
-
     fn bug_helper() -> !;
     fn nvme_init() -> c_types::c_int;
     fn nvme_exit() -> !;
-    fn blk_noretry_request() ->
-    fn nvme_req() ->
+
 
 }
 
@@ -72,32 +47,26 @@ pub fn nvme_exit_fn() -> ! {
 
 
 //Export Rust Functions to C //
-
 #[no_mangle]
 extern "C" fn nvme_req_needs_retry( req : *mut bindings::request ) ->  u8 {
-	
-	if ( req->cmd_flags & (REQ_FAILFAST_DEV|REQ_FAILFAST_TRANSPORT| REQ_FAILFAST_DRIVER))
+
+   unsafe {
+   	
+	let nvme_req_ : bindings::nvme_request = *(req.offset(1)); //as bindings::nvme_request;
+
+	if  ((*req).cmd_flags & ( bindings::REQ_FAILFAST_DEV | bindings::REQ_FAILFAST_TRANSPORT | bindings::REQ_FAILFAST_DRIVER)) != 0 {
 		return 0;
-	else if ( ( req + 1 ) -> status & NVME_SC_DNR)
+	}
+	else if  nvme_req_.status & bindings::NVME_SC_DNR != 0 {
 		return 0;
-	else if ( ( req + 1 ) -> retries >= nvme_max_retries )
+	}
+	else if  nvme_req_.retries >= bindings::nvme_max_retries  {
 		return 0;
+	}
 	return 1;
-}
-/*
-bool nvme_req_needs_retry(struct request *req)
-{
-        if (blk_noretry_request(req))
-                return false;
-        if (nvme_req(req)->status & NVME_SC_DNR)
-                return false;
-        if (nvme_req(req)->retries >= nvme_max_retries)
-                return false;
-        return true;
-}
-*/
 
-
+   }
+}
 
 
 

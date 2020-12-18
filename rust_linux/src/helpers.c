@@ -69,7 +69,7 @@ EXPORT_SYMBOL_GPL(nvme_io_timeout);
 
 static  unsigned char shutdown_timeout = 5;
 
-static  u8 nvme_max_retries = 5;
+u8 nvme_max_retries = 5;
 
 static  unsigned long default_ps_max_latency_us = 100000;
 

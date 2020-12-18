@@ -2,7 +2,7 @@ use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
 use std::{env, fs};
 
-const INCLUDED_TYPES: &[&str] = &["file_system_type", "mode_t", "umode_t", "ctl_table"];
+const INCLUDED_TYPES: &[&str] = &["file_system_type", "mode_t", "umode_t", "ctl_table", "nvme_request"];
 const INCLUDED_FUNCTIONS: &[&str] = &[
     "cdev_add",
     "cdev_init",
@@ -26,6 +26,7 @@ const INCLUDED_FUNCTIONS: &[&str] = &[
     "printk",
     "add_device_randomness",
 ];
+
 const INCLUDED_VARS: &[&str] = &[
     "EINVAL",
     "ENOMEM",
@@ -46,14 +47,21 @@ const INCLUDED_VARS: &[&str] = &[
     "SEEK_CUR",
     "SEEK_END",
     "O_NONBLOCK",
+    "BINDINGS_REQ_FAILFAST_DEV",
+    "BINDINGS_REQ_FAILFAST_TRANSPORT",
+    "BINDINGS_REQ_FAILFAST_DRIVER",
+    "BINDINGS_NVME_SC_DNR",
+
+    "nvme_max_retries",
+
 ];
+
 const OPAQUE_TYPES: &[&str] = &[
     // These need to be opaque because they're both packed and aligned, which rustc
     // doesn't support yet. See https://github.com/rust-lang/rust/issues/59154
     // and https://github.com/rust-lang/rust-bindgen/issues/1538
     "desc_struct",
     "xregs_state",
-"nvme_ctrl",
 //"nvme_ns",
 //"work_struct",
 //"request",
