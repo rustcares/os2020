@@ -103,12 +103,6 @@ struct nvme_request {
 enum {
 	NVME_REQ_CANCELLED		= (1 << 0),
 };
-
-struct nvme_request *nvme_req(struct request *req)
-{
-	return blk_mq_rq_to_pdu(req);
-}
-
 /* The below value is the specific amount of delay needed before checking
  * readiness in case of the PCI_DEVICE(0x1c58, 0x0003), which needs the
  * NVME_QUIRK_DELAY_BEFORE_CHK_RDY quirk enabled. The value (in ms) was
@@ -296,79 +290,31 @@ struct nvme_ctrl_ops {
 	int (*reinit_request)(void *data, struct request *rq);
 };
 
-bool nvme_ctrl_ready(struct nvme_ctrl *ctrl)
-{
-	u32 val = 0;
-
-	if (ctrl->ops->reg_read32(ctrl, NVME_REG_CSTS, &val))
-		return false;
-	return val & NVME_CSTS_RDY;
-}
-
-int nvme_reset_subsystem(struct nvme_ctrl *ctrl)
-{
-	if (!ctrl->subsystem)
-		return -ENOTTY;
-	return ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, 0x4E564D65);
-}
-
-u64 nvme_block_nr(struct nvme_ns *ns, sector_t sector)
-{
-	return (sector >> (ns->lba_shift - 9));
-}
-
-void nvme_cleanup_cmd(struct request *req)
-{
-	if (req->rq_flags & RQF_SPECIAL_PAYLOAD) {
-		kfree(page_address(req->special_vec.bv_page) +
-		      req->special_vec.bv_offset);
-	}
-}
-
-void nvme_end_request(struct request *req, __le16 status,
-		union nvme_result result)
-{
-	struct nvme_request *rq = nvme_req(req);
-
-	rq->status = le16_to_cpu(status) >> 1;
-	rq->result = result;
-	blk_mq_complete_request(req);
-}
-
-void nvme_get_ctrl(struct nvme_ctrl *ctrl)
-{
-	get_device(ctrl->device);
-}
-
-void nvme_put_ctrl(struct nvme_ctrl *ctrl)
-{
-	put_device(ctrl->device);
-}
-
+bool nvme_ctrl_ready(struct nvme_ctrl *ctrl);
+int nvme_reset_subsystem(struct nvme_ctrl *ctrl);
+u64 nvme_block_nr(struct nvme_ns *ns, sector_t sector);
+void nvme_cleanup_cmd(struct request *req);
+void nvme_end_request(struct request *req, __le16 status,union nvme_result result);
+void nvme_get_ctrl(struct nvme_ctrl *ctrl);
+void nvme_put_ctrl(struct nvme_ctrl *ctrl);
 void nvme_complete_rq(struct request *req);
 void nvme_cancel_request(struct request *req, void *data, bool reserved);
-bool nvme_change_ctrl_state(struct nvme_ctrl *ctrl,
-		enum nvme_ctrl_state new_state);
+bool nvme_change_ctrl_state(struct nvme_ctrl *ctrl,enum nvme_ctrl_state new_state);
 int nvme_disable_ctrl(struct nvme_ctrl *ctrl, u64 cap);
 int nvme_enable_ctrl(struct nvme_ctrl *ctrl, u64 cap);
 int nvme_shutdown_ctrl(struct nvme_ctrl *ctrl);
-int nvme_init_ctrl(struct nvme_ctrl *ctrl, struct device *dev,
-		const struct nvme_ctrl_ops *ops, unsigned long quirks);
+int nvme_init_ctrl(struct nvme_ctrl *ctrl, struct device *dev,const struct nvme_ctrl_ops *ops, unsigned long quirks);
 void nvme_uninit_ctrl(struct nvme_ctrl *ctrl);
 void nvme_start_ctrl(struct nvme_ctrl *ctrl);
 void nvme_stop_ctrl(struct nvme_ctrl *ctrl);
 void nvme_put_ctrl(struct nvme_ctrl *ctrl);
 int nvme_init_identify(struct nvme_ctrl *ctrl);
-
 void nvme_queue_scan(struct nvme_ctrl *ctrl);
 void nvme_remove_namespaces(struct nvme_ctrl *ctrl);
-
 int nvme_sec_submit(void *data, u16 spsp, u8 secp, void *buffer, size_t len,
 		bool send);
-
 void nvme_complete_async_event(struct nvme_ctrl *ctrl, __le16 status,
 		union nvme_result *res);
-
 void nvme_stop_queues(struct nvme_ctrl *ctrl);
 void nvme_start_queues(struct nvme_ctrl *ctrl);
 void nvme_kill_queues(struct nvme_ctrl *ctrl);
@@ -377,7 +323,6 @@ void nvme_wait_freeze(struct nvme_ctrl *ctrl);
 void nvme_wait_freeze_timeout(struct nvme_ctrl *ctrl, long timeout);
 void nvme_start_freeze(struct nvme_ctrl *ctrl);
 int nvme_reinit_tagset(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set);
-
 #define NVME_QID_ANY -1
 struct request *nvme_alloc_request(struct request_queue *q,
 		struct nvme_command *cmd, blk_mq_req_flags_t flags, int qid);
@@ -395,67 +340,26 @@ void nvme_stop_keep_alive(struct nvme_ctrl *ctrl);
 int nvme_reset_ctrl(struct nvme_ctrl *ctrl);
 int nvme_delete_ctrl(struct nvme_ctrl *ctrl);
 int nvme_delete_ctrl_sync(struct nvme_ctrl *ctrl);
-
 extern const struct attribute_group nvme_ns_id_attr_group;
 extern const struct block_device_operations nvme_ns_head_ops;
-static inline void nvme_failover_req(struct request *req)
-{
-}
- bool nvme_req_needs_failover(struct request *req)
-{
-	return false;
-}
- void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
-{
-}
-static inline int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl,
-		struct nvme_ns_head *head)
-{
-	return 0;
-}
-static inline void nvme_mpath_add_disk(struct nvme_ns_head *head)
-{
-}
-static inline void nvme_mpath_remove_disk(struct nvme_ns_head *head)
-{
-}
-static inline void nvme_mpath_add_disk_links(struct nvme_ns *ns)
-{
-}
-static inline void nvme_mpath_remove_disk_links(struct nvme_ns *ns)
-{
-}
-static inline void nvme_mpath_clear_current_path(struct nvme_ns *ns)
-{
-}
-static inline void nvme_mpath_check_last_path(struct nvme_ns *ns)
-{
-}
-
-static inline int nvme_nvm_register(struct nvme_ns *ns, char *disk_name,
-				    int node)
-{
-	return 0;
-}
-
-static inline void nvme_nvm_unregister(struct nvme_ns *ns) {};
-static inline int nvme_nvm_register_sysfs(struct nvme_ns *ns)
-{
-	return 0;
-}
-static inline void nvme_nvm_unregister_sysfs(struct nvme_ns *ns) {};
-static inline int nvme_nvm_ioctl(struct nvme_ns *ns, unsigned int cmd,
-							unsigned long arg)
-{
-	return -ENOTTY;
-}
-
-static inline struct nvme_ns *nvme_get_ns_from_dev(struct device *dev)
-{
-	return dev_to_disk(dev)->private_data;
-}
-
+void nvme_failover_req(struct request *req);
+bool nvme_req_needs_failover(struct request *req);
+void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl);
+int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl,struct nvme_ns_head *head);
+void nvme_mpath_add_disk(struct nvme_ns_head *head);
+void nvme_mpath_remove_disk(struct nvme_ns_head *head);
+void nvme_mpath_add_disk_links(struct nvme_ns *ns);
+void nvme_mpath_remove_disk_links(struct nvme_ns *ns);
+void nvme_mpath_clear_current_path(struct nvme_ns *ns);
+void nvme_mpath_check_last_path(struct nvme_ns *ns);
+int nvme_nvm_register(struct nvme_ns *ns, char *disk_name,   int node);
+void nvme_nvm_unregister(struct nvme_ns *ns);
+int nvme_nvm_register_sysfs(struct nvme_ns *ns);
+void nvme_nvm_unregister_sysfs(struct nvme_ns *ns);
+int nvme_nvm_ioctl(struct nvme_ns *ns, unsigned int cmd,unsigned long arg);
+struct nvme_ns *nvme_get_ns_from_dev(struct device *dev);
 int __init nvme_core_init(void);
 void nvme_core_exit(void);
+struct nvme_request *nvme_req(struct request *req);
 
 #endif /* _NVME_H */

@@ -2,8 +2,15 @@ use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
 use std::{env, fs};
 
-const INCLUDED_TYPES: &[&str] = &["file_system_type", "mode_t", "umode_t", "ctl_table", "nvme_request", "nvme_ns"];
+const INCLUDED_TYPES: &[&str] = &["nvme_request", "file_system_type", "mode_t", "umode_t", "ctl_table", "nvme_ns", "gendisk", 
+"req_flag_bits",
+"nvme_ctrl","work_struct","request","blk_status_t","kref","nvme_ns_head","request_queue","nvme_command","nvme_dsm_range","nvme_id_ctrl", "nvme_ns_ids", "nvme_user_io", "nvme_passthru_cmd", "hd_geometry", "nvme_passthru_cmd","req_opf", ];
 const INCLUDED_FUNCTIONS: &[&str] = &[
+   "memcpy",
+   "nvme_setup_flush",
+"nvme_setup_discard",
+"nvme_setup_rw",
+"nvme_assign_write_stream",
     "cdev_add",
     "cdev_init",
     "cdev_del",
@@ -25,9 +32,17 @@ const INCLUDED_FUNCTIONS: &[&str] = &[
     "rng_is_initialized",
     "printk",
     "add_device_randomness",
-];
+"nvme_req",
+"nvme_req_needs_failover",
 
+];
 const INCLUDED_VARS: &[&str] = &[
+
+"REQ_FAILFAST_DEV",
+"REQ_FAILFAST_TRANSPORT",
+"NVME_SC_DNR",
+"REQ_OP_MASK",
+
     "EINVAL",
     "ENOMEM",
     "ESPIPE",
@@ -47,30 +62,23 @@ const INCLUDED_VARS: &[&str] = &[
     "SEEK_CUR",
     "SEEK_END",
     "O_NONBLOCK",
-    "BINDINGS_REQ_FAILFAST_DEV",
-    "BINDINGS_REQ_FAILFAST_TRANSPORT",
-    "BINDINGS_REQ_FAILFAST_DRIVER",
-    "BINDINGS_NVME_SC_DNR",
-    "BINDINGS_BLK_STS_OK",    
-    "BINDINGS_RQF_DONTPREP",
-
-    "nvme_max_retries",
-
+"BLK_STS_OK",
+"REQ_OP_DRV_IN",
+"REQ_OP_DRV_OUT",
+"REQ_OP_FLUSH",
+"REQ_OP_WRITE_ZEROES",
+"REQ_OP_DISCARD",
+"REQ_OP_READ",
+"REQ_OP_WRITE",
+"BLK_STS_IOERR",
 ];
-
 const OPAQUE_TYPES: &[&str] = &[
     // These need to be opaque because they're both packed and aligned, which rustc
     // doesn't support yet. See https://github.com/rust-lang/rust/issues/59154
     // and https://github.com/rust-lang/rust-bindgen/issues/1538
     "desc_struct",
     "xregs_state",
-//"nvme_ns",
-//"work_struct",
-//"request",
-//"kref",
-
-
-
+"RQF_DONTPREP",
 ];
 
 fn handle_kernel_version_cfg(bindings_path: &PathBuf) {

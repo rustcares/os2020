@@ -26,16 +26,26 @@ pub use crate::types::{CStr, Mode};
 
 // Use C functions in Rust //
 extern "C" {
-    fn bug_helper() -> !;
-    fn nvme_init() -> c_types::c_int;
+
+#[no_mangle]
+	fn bug_helper() -> !;
+#[no_mangle]
+	fn nvme_init() -> c_types::c_int;
+#[no_mangle]
     fn nvme_exit() -> !;
-    fn memcpy( dest : *mut core::ffi::c_void, src : *mut core::ffi::c_void, n : c_types::c_size_t) -> *mut core::ffi::c_void;
+#[no_mangle]
     fn nvme_setup_flush( ns : *mut bindings::nvme_ns, cmnd : *mut bindings::nvme_command) -> core::ffi::c_void;
-    fn nvme_setup_discard( ns : *mut bindings::nvme_ns, req : *mut bindings::request, cmnd : *mut bindings::nvme_command) -> bindings::blk_status_t;
-    fn nvme_setup_rw( ns : *mut bindings::nvme_ns, req : *mut bindings::request, cmnd : *mut bindings::nvme_command) -> bindings::blk_status_t;
+#[no_mangle]    
+	fn nvme_setup_discard( ns : *mut bindings::nvme_ns, req : *mut bindings::request, cmnd : *mut bindings::nvme_command) -> bindings::blk_status_t;
+#[no_mangle]
+	fn nvme_setup_rw( ns : *mut bindings::nvme_ns, req : *mut bindings::request, cmnd : *mut bindings::nvme_command) -> bindings::blk_status_t;
+#[no_mangle]
+	fn nvme_req(req : *mut bindings::request ) -> *mut bindings::nvme_request;
+
+#[no_mangle]
+    static mut nvme_max_retries: c_types::c_uchar;
 
 }
-
 
 pub fn nvme_init_fn() -> c_types::c_int {
     unsafe {
@@ -49,64 +59,55 @@ pub fn nvme_exit_fn() -> ! {
     }
 }
 
-
 //Export Rust Functions to C //
 #[no_mangle]
 extern "C" fn nvme_req_needs_retry( req : *mut bindings::request ) ->  u8 {
 
-   unsafe {
-   	
+   unsafe {   	
 	let nvme_req_ : *mut bindings::nvme_request = (req.offset(1)) as *mut bindings::nvme_request;
 
-	if  ((*req).cmd_flags & ( bindings::REQ_FAILFAST_DEV | bindings::REQ_FAILFAST_TRANSPORT | bindings::REQ_FAILFAST_DRIVER)) != 0 {
+	if  ((*req).cmd_flags & ( bindings::req_flag_bits___REQ_FAILFAST_DEV | bindings::req_flag_bits___REQ_FAILFAST_TRANSPORT | bindings::req_flag_bits___REQ_FAILFAST_DRIVER)) != 0 {
 		return 0;
 	}
-	else if  (*nvme_req_).status & bindings::NVME_SC_DNR != 0 {
+	else if  (*nvme_req_).status & ( bindings::NVME_SC_DNR as u16)!= 0 {
 		return 0;
 	}
-	else if  (*nvme_req_).retries >= bindings::nvme_max_retries  {
+	else if  (*nvme_req_).retries >= nvme_max_retries  {
 		return 0;
 	}
 	return 1;
-
    }
 }
-
-
 
 #[no_mangle]
 extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::request, 
 				cmd : *mut bindings::nvme_command) -> bindings::blk_status_t {
     unsafe {
-	let mut ret = bindings::BLK_STS_OK;
-	let mut nvme_req_ : *mut bindings::nvme_request = (req.offset(1)) as *mut bindings::nvme_request;
 
-        let mut RQF_DONTPREP_ : u32 = 1<<7;
+	let mut ret : bindings::blk_status_t = bindings::BLK_STS_OK as u8;
 
-	if (((*req).rq_flags & RQF_DONTPREP_) == 0){
-	    (*nvme_req_).retries = 0;
-	    (*nvme_req_).flags = 0;
-	    (*req).rq_flags |= RQF_DONTPREP_;
+	if ((*req).rq_flags & ((1 << 7) as bindings::req_flags_t)) == 0{
+	    (*nvme_req(req)).retries = 0;
+	    (*nvme_req(req)).flags = 0;
+	    (*req).rq_flags |=   (1 << 7) as bindings::req_flags_t;
 	}   
-    
-        let mut op_mask : u32 = 1<<8 - 1;
-
-        let mut req_op = (*req).cmd_flags & op_mask;
+   
+        let mut req_op = (*req).cmd_flags & bindings::REQ_OP_MASK;
         
 	match req_op {           
-            34 | 35 =>
+            bindings::req_opf_REQ_OP_DRV_IN | bindings::req_opf_REQ_OP_DRV_OUT =>
             {
-                memcpy(cmd as *mut core::ffi::c_void , (*nvme_req_).cmd as *mut core::ffi::c_void , core::mem::size_of::<bindings::request>());
+               bindings::memcpy(cmd as *mut c_types::c_void, (*nvme_req(req)).cmd as *const c_types::c_void, core::mem::size_of::<bindings::request>() as u64);
             }
-            2 => 
+            bindings::req_opf_REQ_OP_FLUSH => 
             {
-                nvme_setup_flush(ns, cmd);
+               nvme_setup_flush(ns, cmd);
             }
-            9 | 3 =>
+            bindings::req_opf_REQ_OP_WRITE_ZEROES | bindings::req_opf_REQ_OP_DISCARD =>
             {
                 ret = nvme_setup_discard(ns, req, cmd);
             }
-            0 | 1 =>
+            bindings::req_opf_REQ_OP_READ | bindings::req_opf_REQ_OP_WRITE =>
             {
                 ret = nvme_setup_rw(ns, req, cmd);
             }
@@ -116,11 +117,10 @@ extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::
             }
         }
 
-	let cmd__ : *mut bindings::nvme_common_command = cmd as *mut bindings::nvme_common_command;
+	((*cmd).__bindgen_anon_1).common.command_id = (*req).tag as u16;
 
 
-        (*cmd__).command_id = (*req).tag as u16;
-        //*cmd = (iriq).tag;
+//        (*cmd__).command_id = (*req).tag as u16;
         return ret;
     }	
 

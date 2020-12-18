@@ -92,6 +92,120 @@ EXPORT_SYMBOL_GPL(nvme_wq);
 void nvme_ns_remove(struct nvme_ns *ns);
 int nvme_revalidate_disk(struct gendisk *disk);
 
+struct nvme_request *nvme_req(struct request *req)
+{
+        return blk_mq_rq_to_pdu(req);
+}
+bool nvme_ctrl_ready(struct nvme_ctrl *ctrl)
+{
+        u32 val = 0;
+
+        if (ctrl->ops->reg_read32(ctrl, NVME_REG_CSTS, &val))
+                return false;
+        return val & NVME_CSTS_RDY;
+}
+
+int nvme_reset_subsystem(struct nvme_ctrl *ctrl)
+{
+        if (!ctrl->subsystem)
+                return -ENOTTY;
+        return ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, 0x4E564D65);
+}
+
+u64 nvme_block_nr(struct nvme_ns *ns, sector_t sector)
+{
+        return (sector >> (ns->lba_shift - 9));
+}
+
+void nvme_cleanup_cmd(struct request *req)
+{
+        if (req->rq_flags & RQF_SPECIAL_PAYLOAD) {
+                kfree(page_address(req->special_vec.bv_page) +
+                      req->special_vec.bv_offset);
+        }
+}
+
+void nvme_end_request(struct request *req, __le16 status,
+                union nvme_result result)
+{
+        struct nvme_request *rq = nvme_req(req);
+
+        rq->status = le16_to_cpu(status) >> 1;
+        rq->result = result;
+        blk_mq_complete_request(req);
+}
+
+void nvme_get_ctrl(struct nvme_ctrl *ctrl)
+{
+        get_device(ctrl->device);
+}
+
+void nvme_put_ctrl(struct nvme_ctrl *ctrl)
+{
+        put_device(ctrl->device);
+}
+
+ void nvme_kick_requeue_lists(struct nvme_ctrl *ctrl)
+{
+}
+int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl,
+                struct nvme_ns_head *head)
+{
+        return 0;
+}
+void nvme_mpath_add_disk(struct nvme_ns_head *head)
+{
+}
+void nvme_mpath_remove_disk(struct nvme_ns_head *head)
+{
+}
+void nvme_mpath_add_disk_links(struct nvme_ns *ns)
+{
+}
+void nvme_mpath_remove_disk_links(struct nvme_ns *ns)
+{
+}
+void nvme_mpath_clear_current_path(struct nvme_ns *ns)
+{
+}
+void nvme_mpath_check_last_path(struct nvme_ns *ns)
+{
+}
+int nvme_nvm_register(struct nvme_ns *ns, char *disk_name,
+                                    int node)
+{
+        return 0;
+}
+void nvme_nvm_unregister(struct nvme_ns *ns) {};
+int nvme_nvm_register_sysfs(struct nvme_ns *ns)
+{
+        return 0;
+}
+void nvme_nvm_unregister_sysfs(struct nvme_ns *ns) {};
+int nvme_nvm_ioctl(struct nvme_ns *ns, unsigned int cmd, unsigned long arg)
+{
+        return -ENOTTY;
+}
+
+struct nvme_ns *nvme_get_ns_from_dev(struct device *dev)
+{
+        return dev_to_disk(dev)->private_data;
+}
+void nvme_failover_req(struct request *req)
+{
+}
+ bool nvme_req_needs_failover(struct request *req)
+{
+        return false;
+}
+
+
+
+
+
+
+
+
 __le32 nvme_get_log_dw10(u8 lid, size_t size)
 {
 	return cpu_to_le32((((size / 4) - 1) << 16) | lid);
@@ -6181,6 +6295,7 @@ void __exit nvme_exit(void)
 	nvme_core_exit();
 }
 
+EXPORT_SYMBOL_GPL(nvme_setup_cmd);
 
 
 
