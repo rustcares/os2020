@@ -97,7 +97,7 @@ extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::
 	match req_op {           
             bindings::req_opf_REQ_OP_DRV_IN | bindings::req_opf_REQ_OP_DRV_OUT =>
             {
-               bindings::memcpy(cmd as *mut c_types::c_void, (*nvme_req(req)).cmd as *const c_types::c_void, core::mem::size_of::<bindings::request>() as u64);
+               bindings::memcpy(cmd as *mut c_types::c_void, (*nvme_req(req)).cmd as *mut c_types::c_void, core::mem::size_of::<bindings::nvme_command>() as u64);
             }
             bindings::req_opf_REQ_OP_FLUSH => 
             {
@@ -118,13 +118,34 @@ extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::
         }
 
 	((*cmd).__bindgen_anon_1).common.command_id = (*req).tag as u16;
-
-
-//        (*cmd__).command_id = (*req).tag as u16;
         return ret;
     }	
 
 }
+/*
+
+이제 작동은 잘댐 
+
+root의 build.rs에다가 함수 타입 엄청 짱박고, 한번 make 하셈
+그런다음에 ag해서 찾고자하는 symbol 해서 debug/target ../bindings.rs 안에 생기면 그냥 bindings:: xxxx 로 쓰면댐
+
+
+REQ_OP_WRITE_ZEROES 같은애는 bindings::req_opf_REQ_OP_WRITE_ZEROES 식으로 바껴서
+
+ag를 통해서 찾아야함:
+
+
+
+
+
+*/
+
+
+
+
+
+
+
 
 
 #[macro_export]
