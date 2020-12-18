@@ -6170,10 +6170,11 @@ int __init nvme_init(void)
 
 void __exit nvme_exit(void)
 {
+	nvme_core_exit();
 	pci_unregister_driver(&nvme_driver);
 	flush_workqueue(nvme_wq);
 	_nvme_check_size();
-	nvme_core_exit();
+//	nvme_core_exit();
 }
 
 

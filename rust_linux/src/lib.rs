@@ -52,15 +52,15 @@ extern "C" fn nvme_req_needs_retry( req : *mut bindings::request ) ->  u8 {
 
    unsafe {
    	
-	let nvme_req_ : bindings::nvme_request = *(req.offset(1)); //as bindings::nvme_request;
+	let nvme_req_ : *mut bindings::nvme_request = (req.offset(1)) as *mut bindings::nvme_request;
 
 	if  ((*req).cmd_flags & ( bindings::REQ_FAILFAST_DEV | bindings::REQ_FAILFAST_TRANSPORT | bindings::REQ_FAILFAST_DRIVER)) != 0 {
 		return 0;
 	}
-	else if  nvme_req_.status & bindings::NVME_SC_DNR != 0 {
+	else if  (*nvme_req_).status & bindings::NVME_SC_DNR != 0 {
 		return 0;
 	}
-	else if  nvme_req_.retries >= bindings::nvme_max_retries  {
+	else if  (*nvme_req_).retries >= bindings::nvme_max_retries  {
 		return 0;
 	}
 	return 1;
@@ -68,7 +68,8 @@ extern "C" fn nvme_req_needs_retry( req : *mut bindings::request ) ->  u8 {
    }
 }
 
-
+#[no_mangle]
+extern "C" fn nvme_setup_cmd( ns : *mut bindings::
 
 
 
