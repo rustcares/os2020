@@ -2,7 +2,7 @@ use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
 use std::{env, fs};
 
-const INCLUDED_TYPES: &[&str] = &["file_system_type", "mode_t", "umode_t", "ctl_table", "nvme_request"];
+const INCLUDED_TYPES: &[&str] = &["file_system_type", "mode_t", "umode_t", "ctl_table", "nvme_request", "nvme_ns"];
 const INCLUDED_FUNCTIONS: &[&str] = &[
     "cdev_add",
     "cdev_init",
@@ -51,6 +51,8 @@ const INCLUDED_VARS: &[&str] = &[
     "BINDINGS_REQ_FAILFAST_TRANSPORT",
     "BINDINGS_REQ_FAILFAST_DRIVER",
     "BINDINGS_NVME_SC_DNR",
+    "BINDINGS_BLK_STS_OK",    
+    "BINDINGS_RQF_DONTPREP",
 
     "nvme_max_retries",
 

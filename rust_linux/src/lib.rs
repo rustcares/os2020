@@ -4,6 +4,7 @@
 extern crate alloc;
 
 use core::panic::PanicInfo;
+use core::mem::size_of;
 
 mod allocator;
 pub mod bindings;
@@ -28,7 +29,10 @@ extern "C" {
     fn bug_helper() -> !;
     fn nvme_init() -> c_types::c_int;
     fn nvme_exit() -> !;
-
+    fn memcpy( dest : *mut core::ffi::c_void, src : *mut core::ffi::c_void, n : c_types::c_size_t) -> *mut core::ffi::c_void;
+    fn nvme_setup_flush( ns : *mut bindings::nvme_ns, cmnd : *mut bindings::nvme_command) -> core::ffi::c_void;
+    fn nvme_setup_discard( ns : *mut bindings::nvme_ns, req : *mut bindings::request, cmnd : *mut bindings::nvme_command) -> bindings::blk_status_t;
+    fn nvme_setup_rw( ns : *mut bindings::nvme_ns, req : *mut bindings::request, cmnd : *mut bindings::nvme_command) -> bindings::blk_status_t;
 
 }
 
@@ -68,15 +72,59 @@ extern "C" fn nvme_req_needs_retry( req : *mut bindings::request ) ->  u8 {
    }
 }
 
+
+
 #[no_mangle]
-extern "C" fn nvme_setup_cmd( ns : *mut bindings::
+extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::request, 
+				cmd : *mut bindings::nvme_command) -> bindings::blk_status_t {
+    unsafe {
+	let mut ret = bindings::BLK_STS_OK;
+	let mut nvme_req_ : *mut bindings::nvme_request = (req.offset(1)) as *mut bindings::nvme_request;
+
+        let mut RQF_DONTPREP_ : u32 = 1<<7;
+
+	if (((*req).rq_flags & RQF_DONTPREP_) == 0){
+	    (*nvme_req_).retries = 0;
+	    (*nvme_req_).flags = 0;
+	    (*req).rq_flags |= RQF_DONTPREP_;
+	}   
+    
+        let mut op_mask : u32 = 1<<8 - 1;
+
+        let mut req_op = (*req).cmd_flags & op_mask;
+        
+	match req_op {           
+            34 | 35 =>
+            {
+                memcpy(cmd as *mut core::ffi::c_void , (*nvme_req_).cmd as *mut core::ffi::c_void , core::mem::size_of::<bindings::request>());
+            }
+            2 => 
+            {
+                nvme_setup_flush(ns, cmd);
+            }
+            9 | 3 =>
+            {
+                ret = nvme_setup_discard(ns, req, cmd);
+            }
+            0 | 1 =>
+            {
+                ret = nvme_setup_rw(ns, req, cmd);
+            }
+            _ =>
+            {
+                println!("[LOG] : nvme_setup_cmd")
+            }
+        }
+
+	let cmd__ : *mut bindings::nvme_common_command = cmd as *mut bindings::nvme_common_command;
 
 
+        (*cmd__).command_id = (*req).tag as u16;
+        //*cmd = (iriq).tag;
+        return ret;
+    }	
 
-
-
-
-
+}
 
 
 #[macro_export]

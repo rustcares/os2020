@@ -472,7 +472,7 @@ void nvme_assign_write_stream(struct nvme_ctrl *ctrl,
 		req->q->write_hints[streamid] += blk_rq_bytes(req) >> 9;
 }
 
-  inline void nvme_setup_flush(struct nvme_ns *ns,
+void nvme_setup_flush(struct nvme_ns *ns,
 		struct nvme_command *cmnd)
 {
 	memset(cmnd, 0, sizeof(*cmnd));
@@ -576,15 +576,18 @@ void nvme_assign_write_stream(struct nvme_ctrl *ctrl,
 	return 0;
 }
 
+/*
 blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req,
 		struct nvme_command *cmd)
 {
 	blk_status_t ret = BLK_STS_OK;
 
-	if (!(req->rq_flags & RQF_DONTPREP)) {
+	let mut RQF_DONTPREP_ : u32 = 1<<7;
+
+	if (!(req->rq_flags & RQF_DONTPREP_)) {
 		nvme_req(req)->retries = 0;
 		nvme_req(req)->flags = 0;
-		req->rq_flags |= RQF_DONTPREP;
+		req->rq_flags |= RQF_DONTPREP_;
 	}
 
 	switch (req_op(req)) {
@@ -596,7 +599,7 @@ blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req,
 		nvme_setup_flush(ns, cmd);
 		break;
 	case REQ_OP_WRITE_ZEROES:
-		/* currently only aliased to deallocate for a few ctrls: */
+		//currently only aliased to deallocate for a few ctrls: 
 	case REQ_OP_DISCARD:
 		ret = nvme_setup_discard(ns, req, cmd);
 		break;
@@ -613,6 +616,7 @@ blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req,
 	return ret;
 }
 EXPORT_SYMBOL_GPL(nvme_setup_cmd);
+*/
 
 /*
  * Returns 0 on success.  If the result is negative, it's a Linux error code;
@@ -6170,11 +6174,11 @@ int __init nvme_init(void)
 
 void __exit nvme_exit(void)
 {
-	nvme_core_exit();
+//	nvme_core_exit();
 	pci_unregister_driver(&nvme_driver);
 	flush_workqueue(nvme_wq);
 	_nvme_check_size();
-//	nvme_core_exit();
+	nvme_core_exit();
 }
 
 
@@ -6185,7 +6189,7 @@ void __exit nvme_exit(void)
 
 
 
-/*
+/* 
   bool nvme_req_needs_retry(struct request *req)
 {
 	if (blk_noretry_request(req))
@@ -6201,8 +6205,45 @@ void __exit nvme_exit(void)
 
 
 
+/* //jy
 
+blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req,
+                struct nvme_command *cmd)
+{
+        blk_status_t ret = BLK_STS_OK;
 
+        if (!(req->rq_flags & RQF_DONTPREP)) {
+                nvme_req(req)->retries = 0;
+                nvme_req(req)->flags = 0;
+                req->rq_flags |= RQF_DONTPREP;
+        }
 
+        switch (req_op(req)) {
+        case REQ_OP_DRV_IN:
+        case REQ_OP_DRV_OUT:
+                memcpy(cmd, nvme_req(req)->cmd, sizeof(*cmd));
+                break;
+        case REQ_OP_FLUSH:
+                nvme_setup_flush(ns, cmd);
+                break;
+        case REQ_OP_WRITE_ZEROES:
+             //  currently only aliased to deallocate for a few ctrls: 
+        case REQ_OP_DISCARD:
+                ret = nvme_setup_discard(ns, req, cmd);
+                break;
+        case REQ_OP_READ:
+        case REQ_OP_WRITE:
+                ret = nvme_setup_rw(ns, req, cmd);
+                break;
+        default:
+                WARN_ON_ONCE(1);
+                return BLK_STS_IOERR;
+        }
+
+        cmd->common.command_id = req->tag;
+        return ret;
+}
+EXPORT_SYMBOL_GPL(nvme_setup_cmd);
+*/
 
 

@@ -7117,6 +7117,39 @@ impl Default for idr {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct ida {
+    pub ida_rt: radix_tree_root,
+}
+#[test]
+fn bindgen_test_layout_ida() {
+    assert_eq!(
+        ::core::mem::size_of::<ida>(),
+        16usize,
+        concat!("Size of: ", stringify!(ida))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<ida>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ida))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<ida>())).ida_rt as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(ida),
+            "::",
+            stringify!(ida_rt)
+        )
+    );
+}
+impl Default for ida {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct user_namespace {
     _unused: [u8; 0],
 }
@@ -33107,6 +33140,247 @@ fn bindgen_test_layout_blk_rq_stat() {
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
+pub struct nvme_id_power_state {
+    pub max_power: __le16,
+    pub rsvd2: __u8,
+    pub flags: __u8,
+    pub entry_lat: __le32,
+    pub exit_lat: __le32,
+    pub read_tput: __u8,
+    pub read_lat: __u8,
+    pub write_tput: __u8,
+    pub write_lat: __u8,
+    pub idle_power: __le16,
+    pub idle_scale: __u8,
+    pub rsvd19: __u8,
+    pub active_power: __le16,
+    pub active_work_scale: __u8,
+    pub rsvd23: [__u8; 9usize],
+}
+#[test]
+fn bindgen_test_layout_nvme_id_power_state() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_id_power_state>(),
+        32usize,
+        concat!("Size of: ", stringify!(nvme_id_power_state))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_id_power_state>(),
+        4usize,
+        concat!("Alignment of ", stringify!(nvme_id_power_state))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).max_power as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(max_power)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).rsvd2 as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(rsvd2)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).flags as *const _ as usize },
+        3usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).entry_lat as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(entry_lat)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).exit_lat as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(exit_lat)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).read_tput as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(read_tput)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).read_lat as *const _ as usize },
+        13usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(read_lat)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).write_tput as *const _ as usize },
+        14usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(write_tput)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).write_lat as *const _ as usize },
+        15usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(write_lat)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).idle_power as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(idle_power)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).idle_scale as *const _ as usize },
+        18usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(idle_scale)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).rsvd19 as *const _ as usize },
+        19usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(rsvd19)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::core::ptr::null::<nvme_id_power_state>())).active_power as *const _ as usize
+        },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(active_power)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::core::ptr::null::<nvme_id_power_state>())).active_work_scale as *const _ as usize
+        },
+        22usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(active_work_scale)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_id_power_state>())).rsvd23 as *const _ as usize },
+        23usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_id_power_state),
+            "::",
+            stringify!(rsvd23)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvme_effects_log {
+    pub acs: [__le32; 256usize],
+    pub iocs: [__le32; 256usize],
+    pub resv: [__u8; 2048usize],
+}
+#[test]
+fn bindgen_test_layout_nvme_effects_log() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_effects_log>(),
+        4096usize,
+        concat!("Size of: ", stringify!(nvme_effects_log))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_effects_log>(),
+        4usize,
+        concat!("Alignment of ", stringify!(nvme_effects_log))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_effects_log>())).acs as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_effects_log),
+            "::",
+            stringify!(acs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_effects_log>())).iocs as *const _ as usize },
+        1024usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_effects_log),
+            "::",
+            stringify!(iocs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_effects_log>())).resv as *const _ as usize },
+        2048usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_effects_log),
+            "::",
+            stringify!(resv)
+        )
+    );
+}
+impl Default for nvme_effects_log {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct nvme_sgl_desc {
     pub addr: __le64,
     pub length: __le32,
@@ -44810,6 +45084,1794 @@ fn bindgen_test_layout_blk_mq_ops() {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct ppa_addr {
+    pub __bindgen_anon_1: ppa_addr__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union ppa_addr__bindgen_ty_1 {
+    pub g: ppa_addr__bindgen_ty_1__bindgen_ty_1,
+    pub c: ppa_addr__bindgen_ty_1__bindgen_ty_2,
+    pub ppa: u64,
+    _bindgen_union_align: u64,
+}
+#[repr(C)]
+#[repr(align(8))]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct ppa_addr__bindgen_ty_1__bindgen_ty_1 {
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 8usize], u16>,
+}
+#[test]
+fn bindgen_test_layout_ppa_addr__bindgen_ty_1__bindgen_ty_1() {
+    assert_eq!(
+        ::core::mem::size_of::<ppa_addr__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(ppa_addr__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::core::mem::align_of::<ppa_addr__bindgen_ty_1__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(ppa_addr__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+}
+impl ppa_addr__bindgen_ty_1__bindgen_ty_1 {
+    #[inline]
+    pub fn blk(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(0usize, 16u8) as u64) }
+    }
+    #[inline]
+    pub fn set_blk(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(0usize, 16u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn pg(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(16usize, 16u8) as u64) }
+    }
+    #[inline]
+    pub fn set_pg(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(16usize, 16u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn sec(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(32usize, 8u8) as u64) }
+    }
+    #[inline]
+    pub fn set_sec(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(32usize, 8u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn pl(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(40usize, 8u8) as u64) }
+    }
+    #[inline]
+    pub fn set_pl(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(40usize, 8u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn lun(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(48usize, 8u8) as u64) }
+    }
+    #[inline]
+    pub fn set_lun(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(48usize, 8u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn ch(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(56usize, 7u8) as u64) }
+    }
+    #[inline]
+    pub fn set_ch(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(56usize, 7u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn reserved(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(63usize, 1u8) as u64) }
+    }
+    #[inline]
+    pub fn set_reserved(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(63usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        blk: u64,
+        pg: u64,
+        sec: u64,
+        pl: u64,
+        lun: u64,
+        ch: u64,
+        reserved: u64,
+    ) -> __BindgenBitfieldUnit<[u8; 8usize], u16> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 8usize], u16> =
+            Default::default();
+        __bindgen_bitfield_unit.set(0usize, 16u8, {
+            let blk: u64 = unsafe { ::core::mem::transmute(blk) };
+            blk as u64
+        });
+        __bindgen_bitfield_unit.set(16usize, 16u8, {
+            let pg: u64 = unsafe { ::core::mem::transmute(pg) };
+            pg as u64
+        });
+        __bindgen_bitfield_unit.set(32usize, 8u8, {
+            let sec: u64 = unsafe { ::core::mem::transmute(sec) };
+            sec as u64
+        });
+        __bindgen_bitfield_unit.set(40usize, 8u8, {
+            let pl: u64 = unsafe { ::core::mem::transmute(pl) };
+            pl as u64
+        });
+        __bindgen_bitfield_unit.set(48usize, 8u8, {
+            let lun: u64 = unsafe { ::core::mem::transmute(lun) };
+            lun as u64
+        });
+        __bindgen_bitfield_unit.set(56usize, 7u8, {
+            let ch: u64 = unsafe { ::core::mem::transmute(ch) };
+            ch as u64
+        });
+        __bindgen_bitfield_unit.set(63usize, 1u8, {
+            let reserved: u64 = unsafe { ::core::mem::transmute(reserved) };
+            reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[repr(align(8))]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct ppa_addr__bindgen_ty_1__bindgen_ty_2 {
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 8usize], u64>,
+}
+#[test]
+fn bindgen_test_layout_ppa_addr__bindgen_ty_1__bindgen_ty_2() {
+    assert_eq!(
+        ::core::mem::size_of::<ppa_addr__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(ppa_addr__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::core::mem::align_of::<ppa_addr__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(ppa_addr__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+}
+impl ppa_addr__bindgen_ty_1__bindgen_ty_2 {
+    #[inline]
+    pub fn line(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(0usize, 63u8) as u64) }
+    }
+    #[inline]
+    pub fn set_line(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(0usize, 63u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn is_cached(&self) -> u64 {
+        unsafe { ::core::mem::transmute(self._bitfield_1.get(63usize, 1u8) as u64) }
+    }
+    #[inline]
+    pub fn set_is_cached(&mut self, val: u64) {
+        unsafe {
+            let val: u64 = ::core::mem::transmute(val);
+            self._bitfield_1.set(63usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(line: u64, is_cached: u64) -> __BindgenBitfieldUnit<[u8; 8usize], u64> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 8usize], u64> =
+            Default::default();
+        __bindgen_bitfield_unit.set(0usize, 63u8, {
+            let line: u64 = unsafe { ::core::mem::transmute(line) };
+            line as u64
+        });
+        __bindgen_bitfield_unit.set(63usize, 1u8, {
+            let is_cached: u64 = unsafe { ::core::mem::transmute(is_cached) };
+            is_cached as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[test]
+fn bindgen_test_layout_ppa_addr__bindgen_ty_1() {
+    assert_eq!(
+        ::core::mem::size_of::<ppa_addr__bindgen_ty_1>(),
+        8usize,
+        concat!("Size of: ", stringify!(ppa_addr__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<ppa_addr__bindgen_ty_1>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ppa_addr__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<ppa_addr__bindgen_ty_1>())).g as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(ppa_addr__bindgen_ty_1),
+            "::",
+            stringify!(g)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<ppa_addr__bindgen_ty_1>())).c as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(ppa_addr__bindgen_ty_1),
+            "::",
+            stringify!(c)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<ppa_addr__bindgen_ty_1>())).ppa as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(ppa_addr__bindgen_ty_1),
+            "::",
+            stringify!(ppa)
+        )
+    );
+}
+impl Default for ppa_addr__bindgen_ty_1 {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[test]
+fn bindgen_test_layout_ppa_addr() {
+    assert_eq!(
+        ::core::mem::size_of::<ppa_addr>(),
+        8usize,
+        concat!("Size of: ", stringify!(ppa_addr))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<ppa_addr>(),
+        8usize,
+        concat!("Alignment of ", stringify!(ppa_addr))
+    );
+}
+impl Default for ppa_addr {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+pub type nvm_l2p_update_fn = ::core::option::Option<
+    unsafe extern "C" fn(
+        arg1: u64,
+        arg2: u32,
+        arg3: *mut __le64,
+        arg4: *mut c_types::c_void,
+    ) -> c_types::c_int,
+>;
+pub type nvm_id_fn = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut nvm_dev, arg2: *mut nvm_id) -> c_types::c_int,
+>;
+pub type nvm_get_l2p_tbl_fn = ::core::option::Option<
+    unsafe extern "C" fn(
+        arg1: *mut nvm_dev,
+        arg2: u64,
+        arg3: u32,
+        arg4: nvm_l2p_update_fn,
+        arg5: *mut c_types::c_void,
+    ) -> c_types::c_int,
+>;
+pub type nvm_op_bb_tbl_fn = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut nvm_dev, arg2: ppa_addr, arg3: *mut u8) -> c_types::c_int,
+>;
+pub type nvm_op_set_bb_fn = ::core::option::Option<
+    unsafe extern "C" fn(
+        arg1: *mut nvm_dev,
+        arg2: *mut ppa_addr,
+        arg3: c_types::c_int,
+        arg4: c_types::c_int,
+    ) -> c_types::c_int,
+>;
+pub type nvm_submit_io_fn = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut nvm_dev, arg2: *mut nvm_rq) -> c_types::c_int,
+>;
+pub type nvm_submit_io_sync_fn = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut nvm_dev, arg2: *mut nvm_rq) -> c_types::c_int,
+>;
+pub type nvm_create_dma_pool_fn = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut nvm_dev, arg2: *mut c_types::c_char) -> *mut c_types::c_void,
+>;
+pub type nvm_destroy_dma_pool_fn =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut c_types::c_void)>;
+pub type nvm_dev_dma_alloc_fn = ::core::option::Option<
+    unsafe extern "C" fn(
+        arg1: *mut nvm_dev,
+        arg2: *mut c_types::c_void,
+        arg3: gfp_t,
+        arg4: *mut dma_addr_t,
+    ) -> *mut c_types::c_void,
+>;
+pub type nvm_dev_dma_free_fn = ::core::option::Option<
+    unsafe extern "C" fn(arg1: *mut c_types::c_void, arg2: *mut c_types::c_void, arg3: dma_addr_t),
+>;
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct nvm_dev_ops {
+    pub identity: nvm_id_fn,
+    pub get_l2p_tbl: nvm_get_l2p_tbl_fn,
+    pub get_bb_tbl: nvm_op_bb_tbl_fn,
+    pub set_bb_tbl: nvm_op_set_bb_fn,
+    pub submit_io: nvm_submit_io_fn,
+    pub submit_io_sync: nvm_submit_io_sync_fn,
+    pub create_dma_pool: nvm_create_dma_pool_fn,
+    pub destroy_dma_pool: nvm_destroy_dma_pool_fn,
+    pub dev_dma_alloc: nvm_dev_dma_alloc_fn,
+    pub dev_dma_free: nvm_dev_dma_free_fn,
+    pub max_phys_sect: c_types::c_uint,
+}
+#[test]
+fn bindgen_test_layout_nvm_dev_ops() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_dev_ops>(),
+        88usize,
+        concat!("Size of: ", stringify!(nvm_dev_ops))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_dev_ops>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvm_dev_ops))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).identity as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(identity)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).get_l2p_tbl as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(get_l2p_tbl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).get_bb_tbl as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(get_bb_tbl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).set_bb_tbl as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(set_bb_tbl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).submit_io as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(submit_io)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).submit_io_sync as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(submit_io_sync)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).create_dma_pool as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(create_dma_pool)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).destroy_dma_pool as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(destroy_dma_pool)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).dev_dma_alloc as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(dev_dma_alloc)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).dev_dma_free as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(dev_dma_free)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev_ops>())).max_phys_sect as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev_ops),
+            "::",
+            stringify!(max_phys_sect)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvm_id_lp_mlc {
+    pub num_pairs: u16,
+    pub pairs: [u8; 886usize],
+}
+#[test]
+fn bindgen_test_layout_nvm_id_lp_mlc() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_id_lp_mlc>(),
+        888usize,
+        concat!("Size of: ", stringify!(nvm_id_lp_mlc))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_id_lp_mlc>(),
+        2usize,
+        concat!("Alignment of ", stringify!(nvm_id_lp_mlc))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_lp_mlc>())).num_pairs as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_lp_mlc),
+            "::",
+            stringify!(num_pairs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_lp_mlc>())).pairs as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_lp_mlc),
+            "::",
+            stringify!(pairs)
+        )
+    );
+}
+impl Default for nvm_id_lp_mlc {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvm_id_lp_tbl {
+    pub id: [__u8; 8usize],
+    pub mlc: nvm_id_lp_mlc,
+}
+#[test]
+fn bindgen_test_layout_nvm_id_lp_tbl() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_id_lp_tbl>(),
+        896usize,
+        concat!("Size of: ", stringify!(nvm_id_lp_tbl))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_id_lp_tbl>(),
+        2usize,
+        concat!("Alignment of ", stringify!(nvm_id_lp_tbl))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_lp_tbl>())).id as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_lp_tbl),
+            "::",
+            stringify!(id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_lp_tbl>())).mlc as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_lp_tbl),
+            "::",
+            stringify!(mlc)
+        )
+    );
+}
+impl Default for nvm_id_lp_tbl {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvm_id_group {
+    pub mtype: u8,
+    pub fmtype: u8,
+    pub num_ch: u8,
+    pub num_lun: u8,
+    pub num_pln: u8,
+    pub num_blk: u16,
+    pub num_pg: u16,
+    pub fpg_sz: u16,
+    pub csecs: u16,
+    pub sos: u16,
+    pub trdt: u32,
+    pub trdm: u32,
+    pub tprt: u32,
+    pub tprm: u32,
+    pub tbet: u32,
+    pub tbem: u32,
+    pub mpos: u32,
+    pub mccap: u32,
+    pub cpar: u16,
+    pub lptbl: nvm_id_lp_tbl,
+}
+#[test]
+fn bindgen_test_layout_nvm_id_group() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_id_group>(),
+        948usize,
+        concat!("Size of: ", stringify!(nvm_id_group))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_id_group>(),
+        4usize,
+        concat!("Alignment of ", stringify!(nvm_id_group))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).mtype as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(mtype)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).fmtype as *const _ as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(fmtype)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).num_ch as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(num_ch)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).num_lun as *const _ as usize },
+        3usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(num_lun)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).num_pln as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(num_pln)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).num_blk as *const _ as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(num_blk)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).num_pg as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(num_pg)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).fpg_sz as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(fpg_sz)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).csecs as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(csecs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).sos as *const _ as usize },
+        14usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(sos)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).trdt as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(trdt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).trdm as *const _ as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(trdm)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).tprt as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(tprt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).tprm as *const _ as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(tprm)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).tbet as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(tbet)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).tbem as *const _ as usize },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(tbem)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).mpos as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(mpos)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).mccap as *const _ as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(mccap)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).cpar as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(cpar)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id_group>())).lptbl as *const _ as usize },
+        50usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id_group),
+            "::",
+            stringify!(lptbl)
+        )
+    );
+}
+impl Default for nvm_id_group {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct nvm_addr_format {
+    pub ch_offset: u8,
+    pub ch_len: u8,
+    pub lun_offset: u8,
+    pub lun_len: u8,
+    pub pln_offset: u8,
+    pub pln_len: u8,
+    pub blk_offset: u8,
+    pub blk_len: u8,
+    pub pg_offset: u8,
+    pub pg_len: u8,
+    pub sect_offset: u8,
+    pub sect_len: u8,
+}
+#[test]
+fn bindgen_test_layout_nvm_addr_format() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_addr_format>(),
+        12usize,
+        concat!("Size of: ", stringify!(nvm_addr_format))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_addr_format>(),
+        1usize,
+        concat!("Alignment of ", stringify!(nvm_addr_format))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).ch_offset as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(ch_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).ch_len as *const _ as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(ch_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).lun_offset as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(lun_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).lun_len as *const _ as usize },
+        3usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(lun_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).pln_offset as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(pln_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).pln_len as *const _ as usize },
+        5usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(pln_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).blk_offset as *const _ as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(blk_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).blk_len as *const _ as usize },
+        7usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(blk_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).pg_offset as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(pg_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).pg_len as *const _ as usize },
+        9usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(pg_len)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).sect_offset as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(sect_offset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_addr_format>())).sect_len as *const _ as usize },
+        11usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_addr_format),
+            "::",
+            stringify!(sect_len)
+        )
+    );
+}
+#[repr(C, packed)]
+#[derive(Copy, Clone)]
+pub struct nvm_id {
+    pub ver_id: u8,
+    pub vmnt: u8,
+    pub cap: u32,
+    pub dom: u32,
+    pub ppaf: nvm_addr_format,
+    pub grp: nvm_id_group,
+}
+#[test]
+fn bindgen_test_layout_nvm_id() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_id>(),
+        970usize,
+        concat!("Size of: ", stringify!(nvm_id))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_id>(),
+        1usize,
+        concat!("Alignment of ", stringify!(nvm_id))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id>())).ver_id as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id),
+            "::",
+            stringify!(ver_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id>())).vmnt as *const _ as usize },
+        1usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id),
+            "::",
+            stringify!(vmnt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id>())).cap as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id),
+            "::",
+            stringify!(cap)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id>())).dom as *const _ as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id),
+            "::",
+            stringify!(dom)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id>())).ppaf as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id),
+            "::",
+            stringify!(ppaf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_id>())).grp as *const _ as usize },
+        22usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_id),
+            "::",
+            stringify!(grp)
+        )
+    );
+}
+impl Default for nvm_id {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+pub type nvm_end_io_fn = ::core::option::Option<unsafe extern "C" fn(arg1: *mut nvm_rq)>;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvm_rq {
+    pub dev: *mut nvm_tgt_dev,
+    pub bio: *mut bio,
+    pub __bindgen_anon_1: nvm_rq__bindgen_ty_1,
+    pub ppa_list: *mut ppa_addr,
+    pub meta_list: *mut c_types::c_void,
+    pub dma_meta_list: dma_addr_t,
+    pub wait: *mut completion,
+    pub end_io: nvm_end_io_fn,
+    pub opcode: u8,
+    pub nr_ppas: u16,
+    pub flags: u16,
+    pub ppa_status: u64,
+    pub error: c_types::c_int,
+    pub private: *mut c_types::c_void,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union nvm_rq__bindgen_ty_1 {
+    pub ppa_addr: ppa_addr,
+    pub dma_ppa_list: dma_addr_t,
+    _bindgen_union_align: u64,
+}
+#[test]
+fn bindgen_test_layout_nvm_rq__bindgen_ty_1() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_rq__bindgen_ty_1>(),
+        8usize,
+        concat!("Size of: ", stringify!(nvm_rq__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_rq__bindgen_ty_1>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvm_rq__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq__bindgen_ty_1>())).ppa_addr as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq__bindgen_ty_1),
+            "::",
+            stringify!(ppa_addr)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::core::ptr::null::<nvm_rq__bindgen_ty_1>())).dma_ppa_list as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq__bindgen_ty_1),
+            "::",
+            stringify!(dma_ppa_list)
+        )
+    );
+}
+impl Default for nvm_rq__bindgen_ty_1 {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[test]
+fn bindgen_test_layout_nvm_rq() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_rq>(),
+        96usize,
+        concat!("Size of: ", stringify!(nvm_rq))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_rq>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvm_rq))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).dev as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(dev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).bio as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(bio)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).ppa_list as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(ppa_list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).meta_list as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(meta_list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).dma_meta_list as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(dma_meta_list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).wait as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(wait)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).end_io as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(end_io)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).opcode as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(opcode)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).nr_ppas as *const _ as usize },
+        66usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(nr_ppas)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).flags as *const _ as usize },
+        68usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).ppa_status as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(ppa_status)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).error as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(error)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_rq>())).private as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_rq),
+            "::",
+            stringify!(private)
+        )
+    );
+}
+impl Default for nvm_rq {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct nvm_geo {
+    pub nr_chnls: c_types::c_int,
+    pub nr_luns: c_types::c_int,
+    pub luns_per_chnl: c_types::c_int,
+    pub nr_planes: c_types::c_int,
+    pub sec_per_pg: c_types::c_int,
+    pub pgs_per_blk: c_types::c_int,
+    pub blks_per_lun: c_types::c_int,
+    pub fpg_size: c_types::c_int,
+    pub pfpg_size: c_types::c_int,
+    pub sec_size: c_types::c_int,
+    pub oob_size: c_types::c_int,
+    pub mccap: c_types::c_int,
+    pub ppaf: nvm_addr_format,
+    pub max_rq_size: c_types::c_int,
+    pub plane_mode: c_types::c_int,
+    pub sec_per_pl: c_types::c_int,
+    pub sec_per_blk: c_types::c_int,
+    pub sec_per_lun: c_types::c_int,
+}
+#[test]
+fn bindgen_test_layout_nvm_geo() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_geo>(),
+        80usize,
+        concat!("Size of: ", stringify!(nvm_geo))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_geo>(),
+        4usize,
+        concat!("Alignment of ", stringify!(nvm_geo))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).nr_chnls as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(nr_chnls)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).nr_luns as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(nr_luns)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).luns_per_chnl as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(luns_per_chnl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).nr_planes as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(nr_planes)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).sec_per_pg as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(sec_per_pg)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).pgs_per_blk as *const _ as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(pgs_per_blk)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).blks_per_lun as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(blks_per_lun)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).fpg_size as *const _ as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(fpg_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).pfpg_size as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(pfpg_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).sec_size as *const _ as usize },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(sec_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).oob_size as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(oob_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).mccap as *const _ as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(mccap)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).ppaf as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(ppaf)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).max_rq_size as *const _ as usize },
+        60usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(max_rq_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).plane_mode as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(plane_mode)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).sec_per_pl as *const _ as usize },
+        68usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(sec_per_pl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).sec_per_blk as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(sec_per_blk)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_geo>())).sec_per_lun as *const _ as usize },
+        76usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_geo),
+            "::",
+            stringify!(sec_per_lun)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvm_tgt_dev {
+    pub geo: nvm_geo,
+    pub luns: *mut ppa_addr,
+    pub total_secs: sector_t,
+    pub identity: nvm_id,
+    pub q: *mut request_queue,
+    pub parent: *mut nvm_dev,
+    pub map: *mut c_types::c_void,
+}
+#[test]
+fn bindgen_test_layout_nvm_tgt_dev() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_tgt_dev>(),
+        1096usize,
+        concat!("Size of: ", stringify!(nvm_tgt_dev))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_tgt_dev>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvm_tgt_dev))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_tgt_dev>())).geo as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_tgt_dev),
+            "::",
+            stringify!(geo)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_tgt_dev>())).luns as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_tgt_dev),
+            "::",
+            stringify!(luns)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_tgt_dev>())).total_secs as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_tgt_dev),
+            "::",
+            stringify!(total_secs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_tgt_dev>())).identity as *const _ as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_tgt_dev),
+            "::",
+            stringify!(identity)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_tgt_dev>())).q as *const _ as usize },
+        1072usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_tgt_dev),
+            "::",
+            stringify!(q)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_tgt_dev>())).parent as *const _ as usize },
+        1080usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_tgt_dev),
+            "::",
+            stringify!(parent)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_tgt_dev>())).map as *const _ as usize },
+        1088usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_tgt_dev),
+            "::",
+            stringify!(map)
+        )
+    );
+}
+impl Default for nvm_tgt_dev {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvm_dev {
+    pub ops: *mut nvm_dev_ops,
+    pub devices: list_head,
+    pub geo: nvm_geo,
+    pub lps_per_blk: c_types::c_int,
+    pub lptbl: *mut c_types::c_int,
+    pub total_secs: c_types::c_ulong,
+    pub lun_map: *mut c_types::c_ulong,
+    pub dma_pool: *mut c_types::c_void,
+    pub identity: nvm_id,
+    pub q: *mut request_queue,
+    pub name: [c_types::c_char; 32usize],
+    pub private_data: *mut c_types::c_void,
+    pub rmap: *mut c_types::c_void,
+    pub mlock: mutex,
+    pub lock: spinlock_t,
+    pub area_list: list_head,
+    pub targets: list_head,
+}
+#[test]
+fn bindgen_test_layout_nvm_dev() {
+    assert_eq!(
+        ::core::mem::size_of::<nvm_dev>(),
+        1248usize,
+        concat!("Size of: ", stringify!(nvm_dev))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvm_dev>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvm_dev))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).ops as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(ops)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).devices as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(devices)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).geo as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(geo)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).lps_per_blk as *const _ as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(lps_per_blk)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).lptbl as *const _ as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(lptbl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).total_secs as *const _ as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(total_secs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).lun_map as *const _ as usize },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(lun_map)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).dma_pool as *const _ as usize },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(dma_pool)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).identity as *const _ as usize },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(identity)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).q as *const _ as usize },
+        1120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(q)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).name as *const _ as usize },
+        1128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).private_data as *const _ as usize },
+        1160usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(private_data)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).rmap as *const _ as usize },
+        1168usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(rmap)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).mlock as *const _ as usize },
+        1176usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(mlock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).lock as *const _ as usize },
+        1208usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(lock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).area_list as *const _ as usize },
+        1216usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(area_list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvm_dev>())).targets as *const _ as usize },
+        1232usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvm_dev),
+            "::",
+            stringify!(targets)
+        )
+    );
+}
+impl Default for nvm_dev {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct opal_dev {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub struct nvme_request {
     pub cmd: *mut nvme_command,
     pub result: nvme_completion_nvme_result,
@@ -44881,6 +46943,1476 @@ fn bindgen_test_layout_nvme_request() {
     );
 }
 impl Default for nvme_request {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+pub const nvme_ctrl_state_NVME_CTRL_NEW: nvme_ctrl_state = 0;
+pub const nvme_ctrl_state_NVME_CTRL_LIVE: nvme_ctrl_state = 1;
+pub const nvme_ctrl_state_NVME_CTRL_RESETTING: nvme_ctrl_state = 2;
+pub const nvme_ctrl_state_NVME_CTRL_RECONNECTING: nvme_ctrl_state = 3;
+pub const nvme_ctrl_state_NVME_CTRL_DELETING: nvme_ctrl_state = 4;
+pub const nvme_ctrl_state_NVME_CTRL_DEAD: nvme_ctrl_state = 5;
+pub type nvme_ctrl_state = u32;
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvme_ctrl {
+    pub state: nvme_ctrl_state,
+    pub identified: bool_,
+    pub lock: spinlock_t,
+    pub ops: *const nvme_ctrl_ops,
+    pub admin_q: *mut request_queue,
+    pub connect_q: *mut request_queue,
+    pub dev: *mut device,
+    pub instance: c_types::c_int,
+    pub tagset: *mut blk_mq_tag_set,
+    pub admin_tagset: *mut blk_mq_tag_set,
+    pub namespaces: list_head,
+    pub namespaces_mutex: mutex,
+    pub ctrl_device: device,
+    pub device: *mut device,
+    pub cdev: cdev,
+    pub reset_work: work_struct,
+    pub delete_work: work_struct,
+    pub subsys: *mut nvme_subsystem,
+    pub subsys_entry: list_head,
+    pub opal_dev: *mut opal_dev,
+    pub name: [c_types::c_char; 12usize],
+    pub cntlid: u16,
+    pub ctrl_config: u32,
+    pub mtfa: u16,
+    pub queue_count: u32,
+    pub cap: u64,
+    pub page_size: u32,
+    pub max_hw_sectors: u32,
+    pub oncs: u16,
+    pub oacs: u16,
+    pub nssa: u16,
+    pub nr_streams: u16,
+    pub abort_limit: atomic_t,
+    pub vwc: u8,
+    pub vs: u32,
+    pub sgls: u32,
+    pub kas: u16,
+    pub npss: u8,
+    pub apsta: u8,
+    pub aen_result: u32,
+    pub shutdown_timeout: c_types::c_uint,
+    pub kato: c_types::c_uint,
+    pub subsystem: bool_,
+    pub quirks: c_types::c_ulong,
+    pub psd: [nvme_id_power_state; 32usize],
+    pub effects: *mut nvme_effects_log,
+    pub scan_work: work_struct,
+    pub async_event_work: work_struct,
+    pub ka_work: delayed_work,
+    pub fw_act_work: work_struct,
+    pub ps_max_latency_us: u64,
+    pub apst_enabled: bool_,
+    pub hmpre: u32,
+    pub hmmin: u32,
+    pub hmminds: u32,
+    pub hmmaxd: u16,
+    pub sqsize: u16,
+    pub ioccsz: u32,
+    pub iorcsz: u32,
+    pub icdoff: u16,
+    pub maxcmd: u16,
+    pub nr_reconnects: c_types::c_int,
+    pub opts: *mut nvmf_ctrl_options,
+}
+#[test]
+fn bindgen_test_layout_nvme_ctrl() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_ctrl>(),
+        2432usize,
+        concat!("Size of: ", stringify!(nvme_ctrl))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_ctrl>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvme_ctrl))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).state as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(state)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).identified as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(identified)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).lock as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(lock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).ops as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(ops)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).admin_q as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(admin_q)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).connect_q as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(connect_q)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).dev as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(dev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).instance as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(instance)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).tagset as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(tagset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).admin_tagset as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(admin_tagset)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).namespaces as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(namespaces)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).namespaces_mutex as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(namespaces_mutex)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).ctrl_device as *const _ as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(ctrl_device)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).device as *const _ as usize },
+        848usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(device)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).cdev as *const _ as usize },
+        856usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(cdev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).reset_work as *const _ as usize },
+        960usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(reset_work)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).delete_work as *const _ as usize },
+        992usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(delete_work)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).subsys as *const _ as usize },
+        1024usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(subsys)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).subsys_entry as *const _ as usize },
+        1032usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(subsys_entry)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).opal_dev as *const _ as usize },
+        1048usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(opal_dev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).name as *const _ as usize },
+        1056usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).cntlid as *const _ as usize },
+        1068usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(cntlid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).ctrl_config as *const _ as usize },
+        1072usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(ctrl_config)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).mtfa as *const _ as usize },
+        1076usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(mtfa)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).queue_count as *const _ as usize },
+        1080usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(queue_count)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).cap as *const _ as usize },
+        1088usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(cap)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).page_size as *const _ as usize },
+        1096usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(page_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).max_hw_sectors as *const _ as usize },
+        1100usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(max_hw_sectors)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).oncs as *const _ as usize },
+        1104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(oncs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).oacs as *const _ as usize },
+        1106usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(oacs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).nssa as *const _ as usize },
+        1108usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(nssa)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).nr_streams as *const _ as usize },
+        1110usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(nr_streams)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).abort_limit as *const _ as usize },
+        1112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(abort_limit)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).vwc as *const _ as usize },
+        1116usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(vwc)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).vs as *const _ as usize },
+        1120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(vs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).sgls as *const _ as usize },
+        1124usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(sgls)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).kas as *const _ as usize },
+        1128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(kas)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).npss as *const _ as usize },
+        1130usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(npss)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).apsta as *const _ as usize },
+        1131usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(apsta)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).aen_result as *const _ as usize },
+        1132usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(aen_result)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).shutdown_timeout as *const _ as usize },
+        1136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(shutdown_timeout)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).kato as *const _ as usize },
+        1140usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(kato)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).subsystem as *const _ as usize },
+        1144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(subsystem)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).quirks as *const _ as usize },
+        1152usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(quirks)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).psd as *const _ as usize },
+        1160usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(psd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).effects as *const _ as usize },
+        2184usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(effects)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).scan_work as *const _ as usize },
+        2192usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(scan_work)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).async_event_work as *const _ as usize },
+        2224usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(async_event_work)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).ka_work as *const _ as usize },
+        2256usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(ka_work)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).fw_act_work as *const _ as usize },
+        2344usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(fw_act_work)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).ps_max_latency_us as *const _ as usize },
+        2376usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(ps_max_latency_us)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).apst_enabled as *const _ as usize },
+        2384usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(apst_enabled)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).hmpre as *const _ as usize },
+        2388usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(hmpre)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).hmmin as *const _ as usize },
+        2392usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(hmmin)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).hmminds as *const _ as usize },
+        2396usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(hmminds)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).hmmaxd as *const _ as usize },
+        2400usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(hmmaxd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).sqsize as *const _ as usize },
+        2402usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(sqsize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).ioccsz as *const _ as usize },
+        2404usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(ioccsz)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).iorcsz as *const _ as usize },
+        2408usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(iorcsz)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).icdoff as *const _ as usize },
+        2412usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(icdoff)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).maxcmd as *const _ as usize },
+        2414usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(maxcmd)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).nr_reconnects as *const _ as usize },
+        2416usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(nr_reconnects)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl>())).opts as *const _ as usize },
+        2424usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl),
+            "::",
+            stringify!(opts)
+        )
+    );
+}
+impl Default for nvme_ctrl {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvme_subsystem {
+    pub instance: c_types::c_int,
+    pub dev: device,
+    pub ref_: kref,
+    pub entry: list_head,
+    pub lock: mutex,
+    pub ctrls: list_head,
+    pub nsheads: list_head,
+    pub subnqn: [c_types::c_char; 223usize],
+    pub serial: [c_types::c_char; 20usize],
+    pub model: [c_types::c_char; 40usize],
+    pub firmware_rev: [c_types::c_char; 8usize],
+    pub cmic: u8,
+    pub vendor_id: u16,
+    pub ns_ida: ida,
+}
+#[test]
+fn bindgen_test_layout_nvme_subsystem() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_subsystem>(),
+        1136usize,
+        concat!("Size of: ", stringify!(nvme_subsystem))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_subsystem>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvme_subsystem))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).instance as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(instance)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).dev as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(dev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).ref_ as *const _ as usize },
+        736usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(ref_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).entry as *const _ as usize },
+        744usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(entry)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).lock as *const _ as usize },
+        760usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(lock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).ctrls as *const _ as usize },
+        792usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(ctrls)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).nsheads as *const _ as usize },
+        808usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(nsheads)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).subnqn as *const _ as usize },
+        824usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(subnqn)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).serial as *const _ as usize },
+        1047usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(serial)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).model as *const _ as usize },
+        1067usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(model)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).firmware_rev as *const _ as usize },
+        1107usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(firmware_rev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).cmic as *const _ as usize },
+        1115usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(cmic)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).vendor_id as *const _ as usize },
+        1116usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(vendor_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_subsystem>())).ns_ida as *const _ as usize },
+        1120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_subsystem),
+            "::",
+            stringify!(ns_ida)
+        )
+    );
+}
+impl Default for nvme_subsystem {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct nvme_ns_ids {
+    pub eui64: [u8; 8usize],
+    pub nguid: [u8; 16usize],
+    pub uuid: uuid_t,
+}
+#[test]
+fn bindgen_test_layout_nvme_ns_ids() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_ns_ids>(),
+        40usize,
+        concat!("Size of: ", stringify!(nvme_ns_ids))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_ns_ids>(),
+        1usize,
+        concat!("Alignment of ", stringify!(nvme_ns_ids))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_ids>())).eui64 as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_ids),
+            "::",
+            stringify!(eui64)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_ids>())).nguid as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_ids),
+            "::",
+            stringify!(nguid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_ids>())).uuid as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_ids),
+            "::",
+            stringify!(uuid)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvme_ns_head {
+    pub disk: *mut gendisk,
+    pub current_path: *mut nvme_ns,
+    pub requeue_list: bio_list,
+    pub requeue_lock: spinlock_t,
+    pub requeue_work: work_struct,
+    pub list: list_head,
+    pub srcu: srcu_struct,
+    pub subsys: *mut nvme_subsystem,
+    pub ns_id: c_types::c_uint,
+    pub ids: nvme_ns_ids,
+    pub entry: list_head,
+    pub ref_: kref,
+    pub instance: c_types::c_int,
+}
+#[test]
+fn bindgen_test_layout_nvme_ns_head() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_ns_head>(),
+        50504usize,
+        concat!("Size of: ", stringify!(nvme_ns_head))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_ns_head>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvme_ns_head))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).disk as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(disk)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).current_path as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(current_path)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).requeue_list as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(requeue_list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).requeue_lock as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(requeue_lock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).requeue_work as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(requeue_work)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).list as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).srcu as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(srcu)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).subsys as *const _ as usize },
+        50424usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(subsys)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).ns_id as *const _ as usize },
+        50432usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(ns_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).ids as *const _ as usize },
+        50436usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(ids)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).entry as *const _ as usize },
+        50480usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(entry)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).ref_ as *const _ as usize },
+        50496usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(ref_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns_head>())).instance as *const _ as usize },
+        50500usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns_head),
+            "::",
+            stringify!(instance)
+        )
+    );
+}
+impl Default for nvme_ns_head {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct nvme_ns {
+    pub list: list_head,
+    pub ctrl: *mut nvme_ctrl,
+    pub queue: *mut request_queue,
+    pub disk: *mut gendisk,
+    pub siblings: list_head,
+    pub ndev: *mut nvm_dev,
+    pub kref: kref,
+    pub head: *mut nvme_ns_head,
+    pub lba_shift: c_types::c_int,
+    pub ms: u16,
+    pub sgs: u16,
+    pub sws: u32,
+    pub ext: bool_,
+    pub pi_type: u8,
+    pub flags: c_types::c_ulong,
+    pub noiob: u16,
+}
+#[test]
+fn bindgen_test_layout_nvme_ns() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_ns>(),
+        112usize,
+        concat!("Size of: ", stringify!(nvme_ns))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_ns>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvme_ns))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).list as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).ctrl as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(ctrl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).queue as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(queue)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).disk as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(disk)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).siblings as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(siblings)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).ndev as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(ndev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).kref as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(kref)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).head as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(head)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).lba_shift as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(lba_shift)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).ms as *const _ as usize },
+        84usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(ms)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).sgs as *const _ as usize },
+        86usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(sgs)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).sws as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(sws)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).ext as *const _ as usize },
+        92usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(ext)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).pi_type as *const _ as usize },
+        93usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(pi_type)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).flags as *const _ as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ns>())).noiob as *const _ as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ns),
+            "::",
+            stringify!(noiob)
+        )
+    );
+}
+impl Default for nvme_ns {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct nvme_ctrl_ops {
+    pub name: *const c_types::c_char,
+    pub module: *mut module,
+    pub flags: c_types::c_uint,
+    pub reg_read32: ::core::option::Option<
+        unsafe extern "C" fn(ctrl: *mut nvme_ctrl, off: u32, val: *mut u32) -> c_types::c_int,
+    >,
+    pub reg_write32: ::core::option::Option<
+        unsafe extern "C" fn(ctrl: *mut nvme_ctrl, off: u32, val: u32) -> c_types::c_int,
+    >,
+    pub reg_read64: ::core::option::Option<
+        unsafe extern "C" fn(ctrl: *mut nvme_ctrl, off: u32, val: *mut u64) -> c_types::c_int,
+    >,
+    pub free_ctrl: ::core::option::Option<unsafe extern "C" fn(ctrl: *mut nvme_ctrl)>,
+    pub submit_async_event: ::core::option::Option<unsafe extern "C" fn(ctrl: *mut nvme_ctrl)>,
+    pub delete_ctrl: ::core::option::Option<unsafe extern "C" fn(ctrl: *mut nvme_ctrl)>,
+    pub get_address: ::core::option::Option<
+        unsafe extern "C" fn(
+            ctrl: *mut nvme_ctrl,
+            buf: *mut c_types::c_char,
+            size: c_types::c_int,
+        ) -> c_types::c_int,
+    >,
+    pub reinit_request: ::core::option::Option<
+        unsafe extern "C" fn(data: *mut c_types::c_void, rq: *mut request) -> c_types::c_int,
+    >,
+}
+#[test]
+fn bindgen_test_layout_nvme_ctrl_ops() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_ctrl_ops>(),
+        88usize,
+        concat!("Size of: ", stringify!(nvme_ctrl_ops))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_ctrl_ops>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvme_ctrl_ops))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).name as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).module as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(module)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).flags as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).reg_read32 as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(reg_read32)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).reg_write32 as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(reg_write32)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).reg_read64 as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(reg_read64)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).free_ctrl as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(free_ctrl)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::core::ptr::null::<nvme_ctrl_ops>())).submit_async_event as *const _ as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(submit_async_event)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).delete_ctrl as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(delete_ctrl)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).get_address as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(get_address)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_ctrl_ops>())).reinit_request as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_ctrl_ops),
+            "::",
+            stringify!(reinit_request)
+        )
+    );
+}
+impl Default for nvme_ctrl_ops {
     fn default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
@@ -45575,10 +49107,285 @@ fn bindgen_test_layout_pipe_buf_operations() {
         )
     );
 }
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvmf_host {
+    pub ref_: kref,
+    pub list: list_head,
+    pub nqn: [c_types::c_char; 223usize],
+    pub id: uuid_t,
+}
+#[test]
+fn bindgen_test_layout_nvmf_host() {
+    assert_eq!(
+        ::core::mem::size_of::<nvmf_host>(),
+        264usize,
+        concat!("Size of: ", stringify!(nvmf_host))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvmf_host>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvmf_host))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_host>())).ref_ as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_host),
+            "::",
+            stringify!(ref_)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_host>())).list as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_host),
+            "::",
+            stringify!(list)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_host>())).nqn as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_host),
+            "::",
+            stringify!(nqn)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_host>())).id as *const _ as usize },
+        247usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_host),
+            "::",
+            stringify!(id)
+        )
+    );
+}
+impl Default for nvmf_host {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[doc = " struct nvmf_ctrl_options - Used to hold the options specified"]
+#[doc = "\t\t\t      with the parsing opts enum."]
+#[doc = " @mask:\tUsed by the fabrics library to parse through sysfs options"]
+#[doc = "\t\ton adding a NVMe controller."]
+#[doc = " @transport:\tHolds the fabric transport \"technology name\" (for a lack of"]
+#[doc = "\t\tbetter description) that will be used by an NVMe controller"]
+#[doc = "\t\tbeing added."]
+#[doc = " @subsysnqn:\tHold the fully qualified NQN subystem name (format defined"]
+#[doc = "\t\tin the NVMe specification, \"NVMe Qualified Names\")."]
+#[doc = " @traddr:\tThe transport-specific TRADDR field for a port on the"]
+#[doc = "              subsystem which is adding a controller."]
+#[doc = " @trsvcid:\tThe transport-specific TRSVCID field for a port on the"]
+#[doc = "              subsystem which is adding a controller."]
+#[doc = " @host_traddr: A transport-specific field identifying the NVME host port"]
+#[doc = "              to use for the connection to the controller."]
+#[doc = " @queue_size: Number of IO queue elements."]
+#[doc = " @nr_io_queues: Number of controller IO queues that will be established."]
+#[doc = " @reconnect_delay: Time between two consecutive reconnect attempts."]
+#[doc = " @discovery_nqn: indicates if the subsysnqn is the well-known discovery NQN."]
+#[doc = " @kato:\tKeep-alive timeout."]
+#[doc = " @host:\tVirtual NVMe host, contains the NQN and Host ID."]
+#[doc = " @max_reconnects: maximum number of allowed reconnect attempts before removing"]
+#[doc = "              the controller, (-1) means reconnect forever, zero means remove"]
+#[doc = "              immediately;"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct nvmf_ctrl_options {
+    pub mask: c_types::c_uint,
+    pub transport: *mut c_types::c_char,
+    pub subsysnqn: *mut c_types::c_char,
+    pub traddr: *mut c_types::c_char,
+    pub trsvcid: *mut c_types::c_char,
+    pub host_traddr: *mut c_types::c_char,
+    pub queue_size: usize,
+    pub nr_io_queues: c_types::c_uint,
+    pub reconnect_delay: c_types::c_uint,
+    pub discovery_nqn: bool_,
+    pub duplicate_connect: bool_,
+    pub kato: c_types::c_uint,
+    pub host: *mut nvmf_host,
+    pub max_reconnects: c_types::c_int,
+}
+#[test]
+fn bindgen_test_layout_nvmf_ctrl_options() {
+    assert_eq!(
+        ::core::mem::size_of::<nvmf_ctrl_options>(),
+        88usize,
+        concat!("Size of: ", stringify!(nvmf_ctrl_options))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvmf_ctrl_options>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvmf_ctrl_options))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).mask as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(mask)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).transport as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(transport)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).subsysnqn as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(subsysnqn)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).traddr as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(traddr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).trsvcid as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(trsvcid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).host_traddr as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(host_traddr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).queue_size as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(queue_size)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).nr_io_queues as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(nr_io_queues)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::core::ptr::null::<nvmf_ctrl_options>())).reconnect_delay as *const _ as usize
+        },
+        60usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(reconnect_delay)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::core::ptr::null::<nvmf_ctrl_options>())).discovery_nqn as *const _ as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(discovery_nqn)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::core::ptr::null::<nvmf_ctrl_options>())).duplicate_connect as *const _ as usize
+        },
+        65usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(duplicate_connect)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).kato as *const _ as usize },
+        68usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(kato)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvmf_ctrl_options>())).host as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(host)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::core::ptr::null::<nvmf_ctrl_options>())).max_reconnects as *const _ as usize
+        },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvmf_ctrl_options),
+            "::",
+            stringify!(max_reconnects)
+        )
+    );
+}
+impl Default for nvmf_ctrl_options {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
 pub const BINDINGS_GFP_KERNEL: gfp_t = 20971712;
 pub const BINDINGS_REQ_FAILFAST_DEV: c_types::c_uint = 256;
 pub const BINDINGS_REQ_FAILFAST_TRANSPORT: c_types::c_uint = 512;
 pub const BINDINGS_REQ_FAILFAST_DRIVER: c_types::c_uint = 1024;
+pub const BINDINGS_BLK_STS_OK: c_types::c_uchar = 0;
 pub const BINDINGS_NVME_SC_DNR: c_types::c_ushort = 16384;
 extern "C" {
     pub static mut nvme_max_retries: u8;
