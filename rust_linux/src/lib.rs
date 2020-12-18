@@ -46,27 +46,17 @@ pub use crate::types::{CStr, Mode};
 
 
 
-
+// Use C functions in Rust //
 extern "C" {
 
     fn bug_helper() -> !;
     fn nvme_init() -> c_types::c_int;
     fn nvme_exit() -> !;
-    fn nvme_core_init() -> !;
-    fn nvme_core_exit() -> !;
+    fn blk_noretry_request() ->
+    fn nvme_req() ->
+
 }
 
-pub fn nvme_core_init_fn() -> ! {
-    unsafe {
-        nvme_core_init();
-    }
-}
-
-pub fn nvme_core_exit_fn() -> ! {
- unsafe {
-        nvme_core_exit();
-    }
-}
 
 pub fn nvme_init_fn() -> c_types::c_int {
     unsafe {
@@ -79,6 +69,41 @@ pub fn nvme_exit_fn() -> ! {
         nvme_exit();
     }
 }
+
+
+//Export Rust Functions to C //
+
+#[no_mangle]
+extern "C" fn nvme_req_needs_retry( req : *mut bindings::request ) ->  u8 {
+	
+	if ( req->cmd_flags & (REQ_FAILFAST_DEV|REQ_FAILFAST_TRANSPORT| REQ_FAILFAST_DRIVER))
+		return 0;
+	else if ( ( req + 1 ) -> status & NVME_SC_DNR)
+		return 0;
+	else if ( ( req + 1 ) -> retries >= nvme_max_retries )
+		return 0;
+	return 1;
+}
+/*
+bool nvme_req_needs_retry(struct request *req)
+{
+        if (blk_noretry_request(req))
+                return false;
+        if (nvme_req(req)->status & NVME_SC_DNR)
+                return false;
+        if (nvme_req(req)->retries >= nvme_max_retries)
+                return false;
+        return true;
+}
+*/
+
+
+
+
+
+
+
+
 
 
 

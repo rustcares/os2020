@@ -89,7 +89,7 @@ EXPORT_SYMBOL_GPL(nvme_wq);
   struct class *nvme_class;
   struct class *nvme_subsys_class;
 
-  void nvme_ns_remove(struct nvme_ns *ns);
+void nvme_ns_remove(struct nvme_ns *ns);
 int nvme_revalidate_disk(struct gendisk *disk);
 
 __le32 nvme_get_log_dw10(u8 lid, size_t size)
@@ -107,7 +107,7 @@ int nvme_reset_ctrl(struct nvme_ctrl *ctrl)
 }
 EXPORT_SYMBOL_GPL(nvme_reset_ctrl);
 
-  int nvme_reset_ctrl_sync(struct nvme_ctrl *ctrl)
+int nvme_reset_ctrl_sync(struct nvme_ctrl *ctrl)
 {
 	int ret;
 
@@ -117,7 +117,7 @@ EXPORT_SYMBOL_GPL(nvme_reset_ctrl);
 	return ret;
 }
 
-  void nvme_delete_ctrl_work(struct work_struct *work)
+void nvme_delete_ctrl_work(struct work_struct *work)
 {
 	struct nvme_ctrl *ctrl =
 		container_of(work, struct nvme_ctrl, delete_work);
@@ -130,7 +130,7 @@ EXPORT_SYMBOL_GPL(nvme_reset_ctrl);
 	nvme_put_ctrl(ctrl);
 }
 
-  int nvme_delete_ctrl(struct nvme_ctrl *ctrl)
+int nvme_delete_ctrl(struct nvme_ctrl *ctrl)
 {
 	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_DELETING))
 		return -EBUSY;
@@ -140,7 +140,7 @@ EXPORT_SYMBOL_GPL(nvme_reset_ctrl);
 }
 EXPORT_SYMBOL_GPL(nvme_delete_ctrl);
 
-  int nvme_delete_ctrl_sync(struct nvme_ctrl *ctrl)
+int nvme_delete_ctrl_sync(struct nvme_ctrl *ctrl)
 {
 	int ret = 0;
 
@@ -157,10 +157,24 @@ EXPORT_SYMBOL_GPL(nvme_delete_ctrl);
 }
 EXPORT_SYMBOL_GPL(nvme_delete_ctrl_sync);
 
-  bool nvme_ns_has_pi(struct nvme_ns *ns)
+bool nvme_ns_has_pi(struct nvme_ns *ns)
 {
 	return ns->pi_type && ns->ms == sizeof(struct t10_pi_tuple);
 }
+
+
+
+
+extern bool nvme_req_needs_retry(struct request *req);
+
+
+
+
+
+
+
+
+
 
   blk_status_t nvme_error_status(struct request *req)
 {
@@ -188,18 +202,6 @@ EXPORT_SYMBOL_GPL(nvme_delete_ctrl_sync);
 		return BLK_STS_IOERR;
 	}
 }
-
-  bool nvme_req_needs_retry(struct request *req)
-{
-	if (blk_noretry_request(req))
-		return false;
-	if (nvme_req(req)->status & NVME_SC_DNR)
-		return false;
-	if (nvme_req(req)->retries >= nvme_max_retries)
-		return false;
-	return true;
-}
-
 
 
   void nvme_complete_rq(struct request *req)
@@ -3430,52 +3432,7 @@ int nvme_reinit_tagset(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set)
 }
 EXPORT_SYMBOL_GPL(nvme_reinit_tagset);
 
-int __init nvme_core_init(void)
-{
-	int result;
 
-	nvme_wq = alloc_workqueue("nvme-wq",
-			WQ_UNBOUND | WQ_MEM_RECLAIM | WQ_SYSFS, 0);
-	if (!nvme_wq)
-		return -ENOMEM;
-
-	result = alloc_chrdev_region(&nvme_chr_devt, 0, NVME_MINORS, "nvme");
-	if (result < 0)
-		goto destroy_wq;
-
-	nvme_class = class_create(THIS_MODULE, "nvme");
-	if (IS_ERR(nvme_class)) {
-		result = PTR_ERR(nvme_class);
-		goto unregister_chrdev;
-	}
-
-	nvme_subsys_class = class_create(THIS_MODULE, "nvme-subsystem");
-	if (IS_ERR(nvme_subsys_class)) {
-		result = PTR_ERR(nvme_subsys_class);
-		goto destroy_class;
-	}
-	return 0;
-
-destroy_class:
-	class_destroy(nvme_class);
-unregister_chrdev:
-	unregister_chrdev_region(nvme_chr_devt, NVME_MINORS);
-destroy_wq:
-	destroy_workqueue(nvme_wq);
-	return result;
-}
-
-void nvme_core_exit(void)
-{
-	ida_destroy(&nvme_subsystems_ida);
-	class_destroy(nvme_subsys_class);
-	class_destroy(nvme_class);
-	unregister_chrdev_region(nvme_chr_devt, NVME_MINORS);
-	destroy_workqueue(nvme_wq);
-}
-
-//module_init(nvme_core_init);
-//module_exit(nvme_core_exit);
 /*
  * NVM Express device driver
  * Copyright (c) 2011-2014, Intel Corporation.
@@ -6099,7 +6056,7 @@ out:
 	pci_cleanup_aer_uncorrect_error_status(pdev);
 }
 
-  const struct pci_error_handlers nvme_err_handler = {
+const struct pci_error_handlers nvme_err_handler = {
 	.error_detected	= nvme_error_detected,
 	.slot_reset	= nvme_slot_reset,
 	.resume		= nvme_error_resume,
@@ -6107,7 +6064,7 @@ out:
 	.reset_done	= nvme_reset_done,
 };
 
-  const struct pci_device_id nvme_id_table[] = {
+const struct pci_device_id nvme_id_table[] = {
 	{ PCI_VDEVICE(INTEL, 0x0953),
 		.driver_data = NVME_QUIRK_STRIPE_SIZE |
 				NVME_QUIRK_DEALLOCATE_ZEROES, },
@@ -6158,10 +6115,55 @@ struct pci_driver nvme_driver = {
 	.err_handler	= &nvme_err_handler,
 };
 
+
+int __init nvme_core_init(void)
+{
+	int result;
+
+	nvme_wq = alloc_workqueue("nvme-wq",
+			WQ_UNBOUND | WQ_MEM_RECLAIM | WQ_SYSFS, 0);
+	if (!nvme_wq)
+		return -ENOMEM;
+
+	result = alloc_chrdev_region(&nvme_chr_devt, 0, NVME_MINORS, "nvme");
+	if (result < 0)
+		goto destroy_wq;
+
+	nvme_class = class_create(THIS_MODULE, "nvme");
+	if (IS_ERR(nvme_class)) {
+		result = PTR_ERR(nvme_class);
+		goto unregister_chrdev;
+	}
+
+	nvme_subsys_class = class_create(THIS_MODULE, "nvme-subsystem");
+	if (IS_ERR(nvme_subsys_class)) {
+		result = PTR_ERR(nvme_subsys_class);
+		goto destroy_class;
+	}
+	return 0;
+
+destroy_class:
+	class_destroy(nvme_class);
+unregister_chrdev:
+	unregister_chrdev_region(nvme_chr_devt, NVME_MINORS);
+destroy_wq:
+	destroy_workqueue(nvme_wq);
+	return result;
+}
+
+
+void nvme_core_exit(void)
+{
+	ida_destroy(&nvme_subsystems_ida);
+	class_destroy(nvme_subsys_class);
+	class_destroy(nvme_class);
+	unregister_chrdev_region(nvme_chr_devt, NVME_MINORS);
+	destroy_workqueue(nvme_wq);
+}
+
 #define KBUILD_MODNAME "rustnvme"
 int __init nvme_init(void)
 {
-
 	nvme_core_init();
 	return pci_register_driver(&nvme_driver);
 }
@@ -6171,5 +6173,35 @@ void __exit nvme_exit(void)
 	pci_unregister_driver(&nvme_driver);
 	flush_workqueue(nvme_wq);
 	_nvme_check_size();
+	nvme_core_exit();
 }
+
+
+
+
+
+///////////////////////////////////////////////////////////// Replaced By Rust ////////////////////////////////////////////
+
+
+
+/*
+  bool nvme_req_needs_retry(struct request *req)
+{
+	if (blk_noretry_request(req))
+		return false;
+	if (nvme_req(req)->status & NVME_SC_DNR)
+		return false;
+	if (nvme_req(req)->retries >= nvme_max_retries)
+		return false;
+	return true;
+}
+
+*/
+
+
+
+
+
+
+
 
