@@ -31,6 +31,7 @@ extern unsigned int admin_timeout;
 #define NVME_DEFAULT_KATO	5
 #define NVME_KATO_GRACE		10
 
+
 //extern struct workqueue_struct *nvme_wq;
 
 enum {
@@ -194,6 +195,61 @@ struct nvme_ctrl {
 	u16 maxcmd;
 	int nr_reconnects;
 	struct nvmf_ctrl_options *opts;
+};
+
+
+struct nvme_dev {
+        struct nvme_queue **queues;
+        struct blk_mq_tag_set tagset;
+        struct blk_mq_tag_set admin_tagset;
+        u32 __iomem *dbs;
+        struct device *dev;
+        struct dma_pool *prp_page_pool;
+        struct dma_pool *prp_small_pool;
+        unsigned online_queues;
+        unsigned max_qid;
+        int q_depth;
+        u32 db_stride;
+        void __iomem *bar;
+        unsigned long bar_mapped_size;
+        struct work_struct remove_work;
+        struct mutex shutdown_lock;
+        bool subsystem;
+        void __iomem *cmb;
+        pci_bus_addr_t cmb_bus_addr;
+        u64 cmb_size;
+        u32 cmbsz;
+        u32 cmbloc;
+        struct nvme_ctrl ctrl;
+        struct completion ioq_wait;
+
+        /* shadow doorbell buffer support: */
+        u32 *dbbuf_dbs;
+        dma_addr_t dbbuf_dbs_dma_addr;
+        u32 *dbbuf_eis;
+        dma_addr_t dbbuf_eis_dma_addr;
+
+        /* host memory buffer support: */
+        u64 host_mem_size;
+        u32 nr_host_mem_descs;
+        dma_addr_t host_mem_descs_dma;
+        struct nvme_host_mem_buf_desc *host_mem_descs;
+        void **host_mem_desc_bufs;
+};
+
+
+struct nvme_iod {
+        struct nvme_request req;
+        struct nvme_queue *nvmeq;
+        bool use_sgl;
+        int aborted;
+        int npages;             /* In the PRP list. 0 means small pool in use */
+        int nents;              /* Used in scatterlist */
+        int length;             /* Of data, in bytes */
+        dma_addr_t first_dma;
+        struct scatterlist meta_sg; /* metadata requires single contiguous buffer */
+        struct scatterlist *sg;
+        struct scatterlist inline_sg[0];
 };
 
 struct nvme_subsystem {

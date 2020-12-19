@@ -1,0 +1,38 @@
+cargo:rerun-if-env-changed=CC
+cargo:rerun-if-env-changed=KDIR
+cargo:rerun-if-env-changed=c_flags
+cargo:rerun-if-changed=src/bindings_helper.h
+cargo:rustc-cfg=kernel_4_4_0_or_greater
+cargo:rustc-cfg=kernel_4_5_0_or_greater
+cargo:rustc-cfg=kernel_4_6_0_or_greater
+cargo:rustc-cfg=kernel_4_7_0_or_greater
+cargo:rustc-cfg=kernel_4_8_0_or_greater
+cargo:rustc-cfg=kernel_4_9_0_or_greater
+cargo:rustc-cfg=kernel_4_10_0_or_greater
+cargo:rustc-cfg=kernel_4_11_0_or_greater
+cargo:rustc-cfg=kernel_4_12_0_or_greater
+cargo:rustc-cfg=kernel_4_13_0_or_greater
+cargo:rustc-cfg=kernel_4_14_0_or_greater
+cargo:rustc-cfg=kernel_4_15_0_or_greater
+cargo:rustc-cfg=kernel_aufs_setfl
+cargo:rerun-if-changed=src/helpers.c
+OPT_LEVEL = Some("0")
+HOST = Some("x86_64-unknown-linux-gnu")
+CFLAGS_x86_64-linux-kernel = None
+CFLAGS_x86_64_linux_kernel = None
+TARGET_CFLAGS = None
+CFLAGS = None
+CRATE_CC_NO_DEFAULTS = None
+DEBUG = Some("true")
+running: "clang" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "--target=x86_64-linux-kernel" "-Wp,-MD,/home/jy/os2020/os2020/rust_linux/nvme/target/x86_64-linux-kernel/debug/.libnvme_rust.a.d" "-nostdinc" "-isystem" "/usr/local/clang_9.0.0/lib/clang/9.0.0/include" "-I/lib/modules/4.15.0-128-generic/build/./arch/x86/include" "-I/lib/modules/4.15.0-128-generic/build/./arch/x86/include/generated" "-I/lib/modules/4.15.0-128-generic/build/./include" "-I/lib/modules/4.15.0-128-generic/build/./arch/x86/include/uapi" "-I/lib/modules/4.15.0-128-generic/build/./arch/x86/include/generated/uapi" "-I/lib/modules/4.15.0-128-generic/build/./include/uapi" "-I/lib/modules/4.15.0-128-generic/build/./include/generated/uapi" "-include" "/lib/modules/4.15.0-128-generic/build/./include/linux/kconfig.h" "-I/lib/modules/4.15.0-128-generic/build/ubuntu/include" "-D__KERNEL__" "-Qunused-arguments" "-Wall" "-Wundef" "-Wstrict-prototypes" "-Wno-trigraphs" "-fno-strict-aliasing" "-fno-common" "-fshort-wchar" "-Werror-implicit-function-declaration" "-Wno-format-security" "-std=gnu89" "-no-integrated-as" "-Werror=unknown-warning-option" "-fno-PIE" "-mno-sse" "-mno-mmx" "-mno-sse2" "-mno-3dnow" "-mno-avx" "-m64" "-mno-80387" "-mstack-alignment=8" "-mtune=generic" "-mno-red-zone" "-mcmodel=kernel" "-funit-at-a-time" "-DCONFIG_X86_X32_ABI" "-DCONFIG_AS_CFI=1" "-DCONFIG_AS_CFI_SIGNAL_FRAME=1" "-DCONFIG_AS_CFI_SECTIONS=1" "-DCONFIG_AS_FXSAVEQ=1" "-DCONFIG_AS_SSSE3=1" "-DCONFIG_AS_CRC32=1" "-DCONFIG_AS_AVX=1" "-DCONFIG_AS_AVX2=1" "-DCONFIG_AS_AVX512=1" "-DCONFIG_AS_SHA1_NI=1" "-DCONFIG_AS_SHA256_NI=1" "-pipe" "-Wno-sign-compare" "-fno-asynchronous-unwind-tables" "-mretpoline-external-thunk" "-fno-delete-null-pointer-checks" "-Wno-address-of-packed-member" "-O2" "-DCC_HAVE_ASM_GOTO" "-Wframe-larger-than=1024" "-fstack-protector-strong" "-Wno-format-invalid-specifier" "-Wno-gnu" "-Wno-tautological-compare" "-mno-global-merge" "-Wno-unused-const-variable" "-fno-omit-frame-pointer" "-fno-optimize-sibling-calls" "-pg" "-mfentry" "-DCC_USING_FENTRY" "-Wdeclaration-after-statement" "-Wno-pointer-sign" "-Wno-array-bounds" "-fno-strict-overflow" "-fno-merge-all-constants" "-fno-stack-check" "-Werror=implicit-int" "-Werror=strict-prototypes" "-Werror=date-time" "-Werror=incompatible-pointer-types" "-fcf-protection=none" "-Wno-initializer-overrides" "-Wno-unused-value" "-Wno-format" "-Wno-sign-compare" "-Wno-format-zero-length" "-Wno-uninitialized" "-DMODULE" "-DKBUILD_BASENAME=\"libnvme_rust\"" "-DMODULE" "-o" "/home/jy/os2020/os2020/rust_linux/nvme/target/x86_64-linux-kernel/debug/build/linux-kernel-module-c9b1d94d255e15ad/out/src/helpers.o" "-c" "src/helpers.c"
+exit code: 0
+AR_x86_64-linux-kernel = None
+AR_x86_64_linux_kernel = None
+TARGET_AR = None
+AR = Some("ar")
+running: "ar" "cq" "/home/jy/os2020/os2020/rust_linux/nvme/target/x86_64-linux-kernel/debug/build/linux-kernel-module-c9b1d94d255e15ad/out/libhelpers.a" "/home/jy/os2020/os2020/rust_linux/nvme/target/x86_64-linux-kernel/debug/build/linux-kernel-module-c9b1d94d255e15ad/out/src/helpers.o"
+exit code: 0
+running: "ar" "s" "/home/jy/os2020/os2020/rust_linux/nvme/target/x86_64-linux-kernel/debug/build/linux-kernel-module-c9b1d94d255e15ad/out/libhelpers.a"
+exit code: 0
+cargo:rustc-link-lib=static=helpers
+cargo:rustc-link-search=native=/home/jy/os2020/os2020/rust_linux/nvme/target/x86_64-linux-kernel/debug/build/linux-kernel-module-c9b1d94d255e15ad/out

@@ -43,6 +43,14 @@ extern "C" {
 	fn nvme_req(req : *mut bindings::request ) -> *mut bindings::nvme_request;
 
 #[no_mangle]
+        fn nvme_pci_use_sgls(dev : *mut bindings::nvme_dev, req : *mut bindings::request) -> bool;
+#[no_mangle]
+        fn nvme_pci_iod_alloc_size(dev : *mut bindings::nvme_dev, size : u32, nseg : u32, use_sgl : bool) -> u32;
+
+
+
+
+#[no_mangle]
     static mut nvme_max_retries: c_types::c_uchar;
 
 }
@@ -58,6 +66,38 @@ pub fn nvme_exit_fn() -> ! {
         nvme_exit();
     }
 }
+
+/*
+pub fn blk_mq_rq_to_pdu(rq : *mut bindings::request) -> *mut c_types::c_void {
+    unsafe {
+        let mut ret : *mut c_types::c_void = (rq.offset(1)) as *mut c_types::c_void;
+        return ret;
+    }
+}
+*/
+pub fn blk_rq_nr_phys_segments(rq : *mut bindings::request) -> u16 {
+    unsafe {
+        if(((*rq).rq_flags & (1<<18)) != 0){
+            return 1;
+        }
+        return (*rq).nr_phys_segments;
+    }
+}
+
+pub fn blk_rq_payload_bytes(rq : *mut bindings::request) -> u32 {
+    unsafe {
+        if(((*rq).rq_flags & (1<<18)) != 0){
+            return ((*rq).__bindgen_anon_3).special_vec.bv_len;
+        }
+        return (*rq).__data_len;
+    }
+}
+
+
+
+
+
+
 
 //Export Rust Functions to C //
 #[no_mangle]
@@ -120,8 +160,43 @@ extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::
 	((*cmd).__bindgen_anon_1).common.command_id = (*req).tag as u16;
         return ret;
     }	
-
 }
+
+
+#[no_mangle]
+extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::nvme_dev) -> bindings::blk_status_t {
+    unsafe{
+
+        let mut iod : *mut bindings::nvme_iod = (rq.offset(1)) as *mut bindings::nvme_iod;
+
+        let mut nseg : i32 = blk_rq_nr_phys_segments(rq) as i32;
+        let mut size : u32 = blk_rq_payload_bytes(rq);
+
+
+        (*iod).use_sgl = nvme_pci_use_sgls(dev, rq);
+        
+        if (nseg > 2 || size > ( 2 * ((*dev).ctrl).page_size)) {
+            let mut alloc_size : c_types::c_size_t = nvme_pci_iod_alloc_size(dev, size, nseg as u32, (*iod).use_sgl) as c_types::c_size_t;
+
+            (*iod).sg = bindings::kmalloc(alloc_size, bindings::GFP_ATOMIC);
+            if((*iod).sg == 0){
+                return 9;
+            }
+        } else {
+            (*iod).sg = (*iod).inline_sg;
+        }
+
+        (*iod).aborted = 0;
+        (*iod).npages = -1;
+        (*iod).nents = 0;
+        (*iod).length = size as i32;
+
+        return 0;
+    }
+}
+
+
+
 /*
 
 이제 작동은 잘댐 
@@ -139,14 +214,6 @@ ag를 통해서 찾아야함:
 
 
 */
-
-
-
-
-
-
-
-
 
 #[macro_export]
 macro_rules! kernel_module {

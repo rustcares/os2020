@@ -91,6 +91,9 @@ EXPORT_SYMBOL_GPL(nvme_wq);
 
 void nvme_ns_remove(struct nvme_ns *ns);
 int nvme_revalidate_disk(struct gendisk *disk);
+blk_status_t nvme_init_iod(struct request *rq, struct nvme_dev *dev);
+
+
 
 struct nvme_request *nvme_req(struct request *req)
 {
@@ -3615,6 +3618,8 @@ struct nvme_queue;
 /*
  * Represents an NVM Express device.  Each nvme_dev is a PCI function.
  */
+
+/*  
 struct nvme_dev {
 	struct nvme_queue **queues;
 	struct blk_mq_tag_set tagset;
@@ -3640,19 +3645,21 @@ struct nvme_dev {
 	struct nvme_ctrl ctrl;
 	struct completion ioq_wait;
 
-	/* shadow doorbell buffer support: */
+	// shadow doorbell buffer support: 
 	u32 *dbbuf_dbs;
 	dma_addr_t dbbuf_dbs_dma_addr;
 	u32 *dbbuf_eis;
 	dma_addr_t dbbuf_eis_dma_addr;
 
-	/* host memory buffer support: */
+	// host memory buffer support: 
 	u64 host_mem_size;
 	u32 nr_host_mem_descs;
 	dma_addr_t host_mem_descs_dma;
 	struct nvme_host_mem_buf_desc *host_mem_descs;
 	void **host_mem_desc_bufs;
 };
+*/
+
 
   int io_queue_depth_set(const char *val, const struct kernel_param *kp)
 {
@@ -3714,19 +3721,21 @@ struct nvme_queue {
  * me express that.  Use nvme_init_iod to ensure there's enough space
  * allocated to store the PRP list.
  */
+/*
 struct nvme_iod {
 	struct nvme_request req;
 	struct nvme_queue *nvmeq;
 	bool use_sgl;
 	int aborted;
-	int npages;		/* In the PRP list. 0 means small pool in use */
-	int nents;		/* Used in scatterlist */
-	int length;		/* Of data, in bytes */
+	int npages;		
+	int nents;		
+	int length;		
 	dma_addr_t first_dma;
-	struct scatterlist meta_sg; /* metadata requires single contiguous buffer */
+	struct scatterlist meta_sg; 
 	struct scatterlist *sg;
 	struct scatterlist inline_sg[0];
 };
+*/
 
 /*
  * Check we didin't inadvertently grow the command struct
@@ -3996,6 +4005,7 @@ int nvme_npages(unsigned size, struct nvme_dev *dev)
 	return true;
 }
 
+/*
   blk_status_t nvme_init_iod(struct request *rq, struct nvme_dev *dev)
 {
 	struct nvme_iod *iod = blk_mq_rq_to_pdu(rq);
@@ -4022,6 +4032,8 @@ int nvme_npages(unsigned size, struct nvme_dev *dev)
 
 	return BLK_STS_OK;
 }
+*/
+
 
   void nvme_free_iod(struct nvme_dev *dev, struct request *req)
 {
@@ -6360,5 +6372,10 @@ blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req,
 }
 EXPORT_SYMBOL_GPL(nvme_setup_cmd);
 */
+
+//nvme_init_iod
+
+
+
 
 
