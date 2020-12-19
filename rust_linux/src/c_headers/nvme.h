@@ -330,6 +330,33 @@ struct nvme_ns {
 	u16 noiob;
 };
 
+struct nvme_queue {
+        struct device *q_dmadev;
+        struct nvme_dev *dev;
+        spinlock_t q_lock;
+        struct nvme_command *sq_cmds;
+        struct nvme_command __iomem *sq_cmds_io;
+        volatile struct nvme_completion *cqes;
+        struct blk_mq_tags **tags;
+        dma_addr_t sq_dma_addr;
+        dma_addr_t cq_dma_addr;
+        u32 __iomem *q_db;
+        u16 q_depth;
+        s16 cq_vector;
+        u16 sq_tail;
+        u16 cq_head;
+        u16 qid;
+        u8 cq_phase;
+        u8 cqe_seen;
+        u32 *dbbuf_sq_db;
+        u32 *dbbuf_cq_db;
+        u32 *dbbuf_sq_ei;
+        u32 *dbbuf_cq_ei;
+};
+  
+
+
+
 struct nvme_ctrl_ops {
 	const char *name;
 	struct module *module;

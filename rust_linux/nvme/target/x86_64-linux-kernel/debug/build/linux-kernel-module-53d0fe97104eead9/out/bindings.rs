@@ -37806,6 +37806,15 @@ pub const NVME_SC_DNR: _bindgen_ty_109 = 16384;
 pub type _bindgen_ty_109 = u32;
 #[repr(C)]
 #[derive(Copy, Clone)]
+pub struct nvme_completion {
+    pub result: nvme_completion_nvme_result,
+    pub sq_head: __le16,
+    pub sq_id: __le16,
+    pub command_id: __u16,
+    pub status: __le16,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
 pub union nvme_completion_nvme_result {
     pub u16: __le16,
     pub u32: __le32,
@@ -37862,6 +37871,74 @@ fn bindgen_test_layout_nvme_completion_nvme_result() {
     );
 }
 impl Default for nvme_completion_nvme_result {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[test]
+fn bindgen_test_layout_nvme_completion() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_completion>(),
+        16usize,
+        concat!("Size of: ", stringify!(nvme_completion))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_completion>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvme_completion))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_completion>())).result as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_completion),
+            "::",
+            stringify!(result)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_completion>())).sq_head as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_completion),
+            "::",
+            stringify!(sq_head)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_completion>())).sq_id as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_completion),
+            "::",
+            stringify!(sq_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_completion>())).command_id as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_completion),
+            "::",
+            stringify!(command_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_completion>())).status as *const _ as usize },
+        14usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_completion),
+            "::",
+            stringify!(status)
+        )
+    );
+}
+impl Default for nvme_completion {
     fn default() -> Self {
         unsafe { ::core::mem::zeroed() }
     }
@@ -46459,6 +46536,12 @@ fn bindgen_test_layout_blk_mq_ops() {
         )
     );
 }
+extern "C" {
+    pub fn blk_mq_end_request(rq: *mut request, error: blk_status_t);
+}
+extern "C" {
+    pub fn blk_mq_requeue_request(rq: *mut request, kick_requeue_list: bool_);
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ppa_addr {
@@ -50152,6 +50235,259 @@ impl Default for nvme_ns {
     }
 }
 #[repr(C)]
+#[derive(Copy, Clone)]
+pub struct nvme_queue {
+    pub q_dmadev: *mut device,
+    pub dev: *mut nvme_dev,
+    pub q_lock: spinlock_t,
+    pub sq_cmds: *mut nvme_command,
+    pub sq_cmds_io: *mut nvme_command,
+    pub cqes: *mut nvme_completion,
+    pub tags: *mut *mut blk_mq_tags,
+    pub sq_dma_addr: dma_addr_t,
+    pub cq_dma_addr: dma_addr_t,
+    pub q_db: *mut u32,
+    pub q_depth: u16,
+    pub cq_vector: s16,
+    pub sq_tail: u16,
+    pub cq_head: u16,
+    pub qid: u16,
+    pub cq_phase: u8,
+    pub cqe_seen: u8,
+    pub dbbuf_sq_db: *mut u32,
+    pub dbbuf_cq_db: *mut u32,
+    pub dbbuf_sq_ei: *mut u32,
+    pub dbbuf_cq_ei: *mut u32,
+}
+#[test]
+fn bindgen_test_layout_nvme_queue() {
+    assert_eq!(
+        ::core::mem::size_of::<nvme_queue>(),
+        128usize,
+        concat!("Size of: ", stringify!(nvme_queue))
+    );
+    assert_eq!(
+        ::core::mem::align_of::<nvme_queue>(),
+        8usize,
+        concat!("Alignment of ", stringify!(nvme_queue))
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).q_dmadev as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(q_dmadev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).dev as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(dev)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).q_lock as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(q_lock)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).sq_cmds as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(sq_cmds)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).sq_cmds_io as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(sq_cmds_io)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).cqes as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(cqes)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).tags as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(tags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).sq_dma_addr as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(sq_dma_addr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).cq_dma_addr as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(cq_dma_addr)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).q_db as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(q_db)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).q_depth as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(q_depth)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).cq_vector as *const _ as usize },
+        82usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(cq_vector)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).sq_tail as *const _ as usize },
+        84usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(sq_tail)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).cq_head as *const _ as usize },
+        86usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(cq_head)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).qid as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(qid)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).cq_phase as *const _ as usize },
+        90usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(cq_phase)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).cqe_seen as *const _ as usize },
+        91usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(cqe_seen)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).dbbuf_sq_db as *const _ as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(dbbuf_sq_db)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).dbbuf_cq_db as *const _ as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(dbbuf_cq_db)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).dbbuf_sq_ei as *const _ as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(dbbuf_sq_ei)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::core::ptr::null::<nvme_queue>())).dbbuf_cq_ei as *const _ as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(nvme_queue),
+            "::",
+            stringify!(dbbuf_cq_ei)
+        )
+    );
+}
+impl Default for nvme_queue {
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+#[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct nvme_ctrl_ops {
     pub name: *const c_types::c_char,
@@ -51420,10 +51756,5 @@ pub struct blk_mq_ctx {
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct throtl_data {
-    pub _address: u8,
-}
-#[repr(C)]
-#[derive(Debug, Default, Copy, Clone)]
-pub struct nvme_queue {
     pub _address: u8,
 }

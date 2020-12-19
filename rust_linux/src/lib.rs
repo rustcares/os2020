@@ -48,11 +48,19 @@ extern "C" {
 #[no_mangle]
         fn kmalloc_wrapper(size : c_types::c_size_t, flags : bindings::gfp_t) -> *mut c_types::c_void;
 #[no_mangle]
-	fn helper_func1(iod : *mut bindings::nvme_io);
-
+        fn nvme_unmap_data(dev : *mut bindings::nvme_dev, req : *mut bindings::request);
+#[no_mangle]
+        fn nvme_req_needs_failover(req : *mut bindings::request) -> bool;
+#[no_mangle]
+        fn nvme_failover_req(req : *mut bindings::request);
+#[no_mangle]
+	fn helper_func1(iod : *mut bindings::nvme_iod);
 #[no_mangle]
     static mut nvme_max_retries: c_types::c_uchar;
-
+#[no_mangle]
+        fn blk_queue_dying_wrapper(q : *mut bindings::request_queue) -> i32;
+#[no_mangle]
+        fn nvme_error_status(req : *mut bindings::request) -> bindings::blk_status_t;
 }
 
 pub fn nvme_init_fn() -> c_types::c_int {
@@ -67,14 +75,14 @@ pub fn nvme_exit_fn() -> ! {
     }
 }
 
-/*
+
 pub fn blk_mq_rq_to_pdu(rq : *mut bindings::request) -> *mut c_types::c_void {
     unsafe {
         let mut ret : *mut c_types::c_void = (rq.offset(1)) as *mut c_types::c_void;
         return ret;
     }
 }
-*/
+
 pub fn blk_rq_nr_phys_segments(rq : *mut bindings::request) -> u16 {
     unsafe {
         if(((*rq).rq_flags & (1<<18)) != 0){
@@ -195,6 +203,42 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
 
         return 0;
     }
+}
+
+
+
+#[no_mangle]
+extern "C" fn nvme_pci_complete_rq ( req : *mut bindings::request )  {
+        unsafe{
+                let mut iod : *mut bindings::nvme_iod = blk_mq_rq_to_pdu(req) as *mut bindings::nvme_iod;
+                nvme_unmap_data( (*((*iod).nvmeq)).dev , req);
+                nvme_complete_rq(req);
+        }
+
+}
+
+#[no_mangle]
+extern "C" fn nvme_complete_rq ( req : *mut bindings::request )  {
+
+unsafe{
+
+  if (*nvme_req(req)).status != 0 && nvme_req_needs_retry(req) != 0 {
+
+        if nvme_req_needs_failover(req) {
+                nvme_failover_req(req);
+                return;
+        }
+
+        if ((blk_queue_dying_wrapper((*req).q) == 0)) {
+              (*nvme_req(req)).retries = (*nvme_req(req)).retries + 1;
+              bindings::blk_mq_requeue_request(req, true);
+              return;
+        }
+
+        bindings::blk_mq_end_request(req, nvme_error_status(req));
+
+  }
+}
 }
 
 

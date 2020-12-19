@@ -1,0 +1,1 @@
+cmd_/home/jy/sanggu/os2020/rust_linux/nvme/nvme_rust.ko := ld -r -m elf_x86_64 -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/jy/sanggu/os2020/rust_linux/nvme/nvme_rust.ko /home/jy/sanggu/os2020/rust_linux/nvme/nvme_rust.o /home/jy/sanggu/os2020/rust_linux/nvme/nvme_rust.mod.o ;  true

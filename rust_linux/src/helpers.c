@@ -320,7 +320,7 @@ extern bool nvme_req_needs_retry(struct request *req);
 	}
 }
 
-
+/*
   void nvme_complete_rq(struct request *req)
 {
 
@@ -341,7 +341,7 @@ extern bool nvme_req_needs_retry(struct request *req);
 	blk_mq_end_request(req, nvme_error_status(req));
 }
 EXPORT_SYMBOL_GPL(nvme_complete_rq);
-
+*/
 
 
 
@@ -3691,30 +3691,6 @@ struct nvme_dev {
  * An NVM Express queue.  Each device has at least two (one for admin
  * commands and one for I/O commands).
  */
-struct nvme_queue {
-	struct device *q_dmadev;
-	struct nvme_dev *dev;
-	spinlock_t q_lock;
-	struct nvme_command *sq_cmds;
-	struct nvme_command __iomem *sq_cmds_io;
-	volatile struct nvme_completion *cqes;
-	struct blk_mq_tags **tags;
-	dma_addr_t sq_dma_addr;
-	dma_addr_t cq_dma_addr;
-	u32 __iomem *q_db;
-	u16 q_depth;
-	s16 cq_vector;
-	u16 sq_tail;
-	u16 cq_head;
-	u16 qid;
-	u8 cq_phase;
-	u8 cqe_seen;
-	u32 *dbbuf_sq_db;
-	u32 *dbbuf_cq_db;
-	u32 *dbbuf_sq_ei;
-	u32 *dbbuf_cq_ei;
-};
-
 void *kmalloc_wrapper(size_t size, gfp_t flags)
 {
     return kmalloc(size, flags);
@@ -4016,7 +3992,7 @@ int nvme_npages(unsigned size, struct nvme_dev *dev)
 //void *convert_to_void(void * item)
 
 
-
+/*
   blk_status_t nvme_init_iod(struct request *rq, struct nvme_dev *dev)
 {
 	struct nvme_iod *iod = blk_mq_rq_to_pdu(rq);
@@ -4051,7 +4027,7 @@ int nvme_npages(unsigned size, struct nvme_dev *dev)
 	return BLK_STS_OK;
 }
 
-
+*/
 
   void nvme_free_iod(struct nvme_dev *dev, struct request *req)
 {
@@ -4461,6 +4437,9 @@ out_free_cmd:
 	return ret;
 }
 
+extern void nvme_pci_complete_rq(struct request *req);
+
+/*
   void nvme_pci_complete_rq(struct request *req)
 {
 	struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
@@ -4468,7 +4447,7 @@ out_free_cmd:
 	nvme_unmap_data(iod->nvmeq->dev, req);
 	nvme_complete_rq(req);
 }
-
+*/
 /* We read the CQE phase first to check if the rest of the entry is valid */
   inline bool nvme_cqe_valid(struct nvme_queue *nvmeq, u16 head,
 		u16 phase)
@@ -6396,4 +6375,33 @@ EXPORT_SYMBOL_GPL(nvme_setup_cmd);
 
 void helper_func1( struct nvme_iod *iod){
 (*iod).sg = (*iod).inline_sg;
+
 }
+/*
+struct nvme_queue {
+	struct device *q_dmadev;
+	struct nvme_dev *dev;
+	spinlock_t q_lock;
+	struct nvme_command *sq_cmds;
+	struct nvme_command __iomem *sq_cmds_io;
+	volatile struct nvme_completion *cqes;
+	struct blk_mq_tags **tags;
+	dma_addr_t sq_dma_addr;
+	dma_addr_t cq_dma_addr;
+	u32 __iomem *q_db;
+	u16 q_depth;
+	s16 cq_vector;
+	u16 sq_tail;
+	u16 cq_head;
+	u16 qid;
+	u8 cq_phase;
+	u8 cqe_seen;
+	u32 *dbbuf_sq_db;
+	u32 *dbbuf_cq_db;
+	u32 *dbbuf_sq_ei;
+	u32 *dbbuf_cq_ei;
+};
+
+
+
+*/

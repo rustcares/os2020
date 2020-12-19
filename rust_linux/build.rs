@@ -4,7 +4,7 @@ use std::{env, fs};
 
 const INCLUDED_TYPES: &[&str] = &["nvme_request", "file_system_type", "mode_t", "umode_t", "ctl_table", "nvme_ns", "gendisk", 
 "req_flag_bits","nvme_ctrl","work_struct","request","blk_status_t","kref","nvme_ns_head","request_queue","nvme_command","nvme_dsm_range",
-"nvme_id_ctrl", "nvme_ns_ids", "nvme_user_io", "nvme_passthru_cmd", "hd_geometry", "nvme_passthru_cmd","req_opf","nvme_dev","nvme_iod"];
+"nvme_id_ctrl", "nvme_ns_ids", "nvme_user_io", "nvme_passthru_cmd", "hd_geometry", "nvme_passthru_cmd","req_opf","nvme_dev","nvme_iod","nvme_queue"];
 
 const INCLUDED_FUNCTIONS: &[&str] = &[
    "blk_mq_rq_to_pdu",
@@ -40,7 +40,8 @@ const INCLUDED_FUNCTIONS: &[&str] = &[
     "add_device_randomness",
 "nvme_req",
 "nvme_req_needs_failover",
-
+"blk_mq_requeue_request",
+"blk_mq_end_request",
 ];
 const INCLUDED_VARS: &[&str] = &[
 
