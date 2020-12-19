@@ -6180,6 +6180,7 @@ out:
 
   void nvme_error_resume(struct pci_dev *pdev)
 {
+	printk(KERN_INFO"nvme_error_resume");
 	pci_cleanup_aer_uncorrect_error_status(pdev);
 }
 
@@ -6246,12 +6247,13 @@ struct pci_driver nvme_driver = {
 int __init nvme_core_init(void)
 {
 	int result;
+	printk(KERN_INFO"nvme_core_init");
 
-	nvme_wq = alloc_workqueue("nvme-wq",
-			WQ_UNBOUND | WQ_MEM_RECLAIM | WQ_SYSFS, 0);
-	if (!nvme_wq)
+	nvme_wq = alloc_workqueue("nvme-wq",WQ_UNBOUND | WQ_MEM_RECLAIM | WQ_SYSFS, 0);
+	if (!nvme_wq){
+		printk(KERN_INFO"nvme_wq == NULL");
 		return -ENOMEM;
-
+	}
 	result = alloc_chrdev_region(&nvme_chr_devt, 0, NVME_MINORS, "nvme");
 	if (result < 0)
 		goto destroy_wq;
@@ -6270,10 +6272,13 @@ int __init nvme_core_init(void)
 	return 0;
 
 destroy_class:
+	printk("destroy_class");
 	class_destroy(nvme_class);
 unregister_chrdev:
+	printk(KERN_INFO"unregister_chrdev");
 	unregister_chrdev_region(nvme_chr_devt, NVME_MINORS);
 destroy_wq:
+	printk(KERN_INFO"destroy_wq");
 	destroy_workqueue(nvme_wq);
 	return result;
 }
@@ -6288,16 +6293,16 @@ void nvme_core_exit(void)
 	destroy_workqueue(nvme_wq);
 }
 
-#define KBUILD_MODNAME "rustnvme"
+#define KBUILD_MODNAME "nvme_rust"
 int __init nvme_init(void)
 {
+	printk(KERN_INFO"nvme_init called");
 	nvme_core_init();
 	return pci_register_driver(&nvme_driver);
 }
 
 void __exit nvme_exit(void)
 {
-//	nvme_core_exit();
 	pci_unregister_driver(&nvme_driver);
 	flush_workqueue(nvme_wq);
 	_nvme_check_size();
@@ -6307,70 +6312,6 @@ void __exit nvme_exit(void)
 EXPORT_SYMBOL_GPL(nvme_setup_cmd);
 
 
-
-
-///////////////////////////////////////////////////////////// Replaced By Rust ////////////////////////////////////////////
-
-
-
-/* 
-  bool nvme_req_needs_retry(struct request *req)
-{
-	if (blk_noretry_request(req))
-		return false;
-	if (nvme_req(req)->status & NVME_SC_DNR)
-		return false;
-	if (nvme_req(req)->retries >= nvme_max_retries)
-		return false;
-	return true;
-}
-
-*/
-
-
-
-/* //jy
-
-blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req,
-                struct nvme_command *cmd)
-{
-        blk_status_t ret = BLK_STS_OK;
-
-        if (!(req->rq_flags & RQF_DONTPREP)) {
-                nvme_req(req)->retries = 0;
-                nvme_req(req)->flags = 0;
-                req->rq_flags |= RQF_DONTPREP;
-        }
-
-        switch (req_op(req)) {
-        case REQ_OP_DRV_IN:
-        case REQ_OP_DRV_OUT:
-                memcpy(cmd, nvme_req(req)->cmd, sizeof(*cmd));
-                break;
-        case REQ_OP_FLUSH:
-                nvme_setup_flush(ns, cmd);
-                break;
-        case REQ_OP_WRITE_ZEROES:
-             //  currently only aliased to deallocate for a few ctrls: 
-        case REQ_OP_DISCARD:
-                ret = nvme_setup_discard(ns, req, cmd);
-                break;
-        case REQ_OP_READ:
-        case REQ_OP_WRITE:
-                ret = nvme_setup_rw(ns, req, cmd);
-                break;
-        default:
-                WARN_ON_ONCE(1);
-                return BLK_STS_IOERR;
-        }
-
-        cmd->common.command_id = req->tag;
-        return ret;
-}
-EXPORT_SYMBOL_GPL(nvme_setup_cmd);
-*/
-
-//nvme_init_iod
 
 
 void helper_func1( struct nvme_iod *iod){
@@ -6383,33 +6324,3 @@ int blk_queue_dying_wrapper( struct request_queue * req   ){
 	blk_queue_dying(req);
 
 }
-
-
-/*
-struct nvme_queue {
-	struct device *q_dmadev;
-	struct nvme_dev *dev;
-	spinlock_t q_lock;
-	struct nvme_command *sq_cmds;
-	struct nvme_command __iomem *sq_cmds_io;
-	volatile struct nvme_completion *cqes;
-	struct blk_mq_tags **tags;
-	dma_addr_t sq_dma_addr;
-	dma_addr_t cq_dma_addr;
-	u32 __iomem *q_db;
-	u16 q_depth;
-	s16 cq_vector;
-	u16 sq_tail;
-	u16 cq_head;
-	u16 qid;
-	u8 cq_phase;
-	u8 cqe_seen;
-	u32 *dbbuf_sq_db;
-	u32 *dbbuf_cq_db;
-	u32 *dbbuf_sq_ei;
-	u32 *dbbuf_cq_ei;
-};
-
-
-
-*/
