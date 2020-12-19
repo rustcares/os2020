@@ -6321,6 +6321,6 @@ void helper_func1( struct nvme_iod *iod){
 
 int blk_queue_dying_wrapper( struct request_queue * req   ){
 
-	blk_queue_dying(req);
+	return	blk_queue_dying(req);
 
 }

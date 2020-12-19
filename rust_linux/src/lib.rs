@@ -186,14 +186,8 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
                 return 9;
             }
         } else {
-            //let mut tmp : *mut c_types::c_void = (*iod).inline_sg as *mut c_types::c_void;
-            //(*iod).sg = tmp as *mut bindings::scatterlist;
-            //    (*iod).sg = (*iod).inline_sg as mut bindings::scatterlist;
             println!("LOG : nvme_init_iod else is called!");
-  //          (*iod).sg = iod.offset(core::mem::size_of::<bindings::nvme_iod>() as isize) as *mut bindings::scatterlist;
-
-//	(*iod).sg = (*iod).inline_sg; 
-		helper_func1(iod);
+	    helper_func1(iod);
         }
         println!("LOG : init_iod exit point");
         (*iod).aborted = 0;
@@ -209,6 +203,8 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
 
 #[no_mangle]
 extern "C" fn nvme_pci_complete_rq ( req : *mut bindings::request )  {
+
+println!("nvme_pci_complete_rq");
         unsafe{
                 let mut iod : *mut bindings::nvme_iod = blk_mq_rq_to_pdu(req) as *mut bindings::nvme_iod;
                 nvme_unmap_data( (*((*iod).nvmeq)).dev , req);
@@ -220,24 +216,28 @@ extern "C" fn nvme_pci_complete_rq ( req : *mut bindings::request )  {
 #[no_mangle]
 extern "C" fn nvme_complete_rq ( req : *mut bindings::request )  {
 
+println!("nvme_complete_rq");
+
 unsafe{
 
   if (*nvme_req(req)).status != 0 && nvme_req_needs_retry(req) != 0 {
 
         if nvme_req_needs_failover(req) {
                 nvme_failover_req(req);
+		println!("nvme_req_needs_failover");
                 return;
         }
 
         if ((blk_queue_dying_wrapper((*req).q) == 0)) {
               (*nvme_req(req)).retries = (*nvme_req(req)).retries + 1;
               bindings::blk_mq_requeue_request(req, true);
+	      println!("blk_mq_requeue_request");
               return;
         }
-
+  }
+	println!("blk_mq_end_request");
         bindings::blk_mq_end_request(req, nvme_error_status(req));
 
-  }
 }
 }
 
