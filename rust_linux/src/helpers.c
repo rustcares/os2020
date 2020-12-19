@@ -6377,6 +6377,14 @@ void helper_func1( struct nvme_iod *iod){
 (*iod).sg = (*iod).inline_sg;
 
 }
+
+int blk_queue_dying_wrapper( struct request_queue * req   ){
+
+	blk_queue_dying(req);
+
+}
+
+
 /*
 struct nvme_queue {
 	struct device *q_dmadev;
