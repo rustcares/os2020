@@ -41,14 +41,14 @@ extern "C" {
 	fn nvme_setup_rw( ns : *mut bindings::nvme_ns, req : *mut bindings::request, cmnd : *mut bindings::nvme_command) -> bindings::blk_status_t;
 #[no_mangle]
 	fn nvme_req(req : *mut bindings::request ) -> *mut bindings::nvme_request;
-
 #[no_mangle]
         fn nvme_pci_use_sgls(dev : *mut bindings::nvme_dev, req : *mut bindings::request) -> bool;
 #[no_mangle]
         fn nvme_pci_iod_alloc_size(dev : *mut bindings::nvme_dev, size : u32, nseg : u32, use_sgl : bool) -> u32;
 #[no_mangle]
         fn kmalloc_wrapper(size : c_types::c_size_t, flags : bindings::gfp_t) -> *mut c_types::c_void;
-
+#[no_mangle]
+	fn helper_func1(iod : *mut bindings::nvme_io);
 
 #[no_mangle]
     static mut nvme_max_retries: c_types::c_uchar;
@@ -92,11 +92,6 @@ pub fn blk_rq_payload_bytes(rq : *mut bindings::request) -> u32 {
         return (*rq).__data_len;
     }
 }
-
-
-
-
-
 
 
 //Export Rust Functions to C //
@@ -162,7 +157,7 @@ extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::
     }	
 }
 
-/*
+
 #[no_mangle]
 extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::nvme_dev) -> bindings::blk_status_t {
     unsafe{
@@ -179,6 +174,7 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
             let mut alloc_size : c_types::c_size_t = nvme_pci_iod_alloc_size(dev, size, nseg as u32, (*iod).use_sgl) as c_types::c_size_t;
             (*iod).sg = kmalloc_wrapper(alloc_size, bindings::GFP_ATOMIC) as *mut bindings::scatterlist;
             if((*iod).sg == (0 as *mut bindings::scatterlist)){
+		println!("LOG Kmalloc Failed");
                 return 9;
             }
         } else {
@@ -188,6 +184,8 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
             println!("LOG : nvme_init_iod else is called!");
   //          (*iod).sg = iod.offset(core::mem::size_of::<bindings::nvme_iod>() as isize) as *mut bindings::scatterlist;
 
+//	(*iod).sg = (*iod).inline_sg; 
+		helper_func1(iod);
         }
         println!("LOG : init_iod exit point");
         (*iod).aborted = 0;
@@ -198,26 +196,8 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
         return 0;
     }
 }
-*/
 
 
-/*
-
-이제 작동은 잘댐 
-
-root의 build.rs에다가 함수 타입 엄청 짱박고, 한번 make 하셈
-그런다음에 ag해서 찾고자하는 symbol 해서 debug/target ../bindings.rs 안에 생기면 그냥 bindings:: xxxx 로 쓰면댐
-
-
-REQ_OP_WRITE_ZEROES 같은애는 bindings::req_opf_REQ_OP_WRITE_ZEROES 식으로 바껴서
-
-ag를 통해서 찾아야함:
-
-
-
-
-
-*/
 
 #[macro_export]
 macro_rules! kernel_module {

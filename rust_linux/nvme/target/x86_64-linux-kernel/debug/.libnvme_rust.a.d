@@ -1,4 +1,4 @@
-/home/jy/os2020/os2020/rust_linux/nvme/target/x86_64-linux-kernel/debug/build/linux-kernel-module-c9b1d94d255e15ad/out/src/helpers.o: \
+/home/jy/sanggu/os2020/rust_linux/nvme/target/x86_64-linux-kernel/debug/build/linux-kernel-module-53d0fe97104eead9/out/src/helpers.o: \
   src/helpers.c \
   /lib/modules/4.15.0-128-generic/build/./include/linux/kconfig.h \
   /lib/modules/4.15.0-128-generic/build/./include/generated/autoconf.h \

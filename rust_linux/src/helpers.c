@@ -6394,6 +6394,6 @@ EXPORT_SYMBOL_GPL(nvme_setup_cmd);
 //nvme_init_iod
 
 
-
-
-
+void helper_func1( struct nvme_iod *iod){
+(*iod).sg = (*iod).inline_sg;
+}
