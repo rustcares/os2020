@@ -46,8 +46,8 @@ extern "C" {
         fn nvme_pci_use_sgls(dev : *mut bindings::nvme_dev, req : *mut bindings::request) -> bool;
 #[no_mangle]
         fn nvme_pci_iod_alloc_size(dev : *mut bindings::nvme_dev, size : u32, nseg : u32, use_sgl : bool) -> u32;
-
-
+#[no_mangle]
+        fn kmalloc_wrapper(size : c_types::c_size_t, flags : bindings::gfp_t) -> *mut c_types::c_void;
 
 
 #[no_mangle]
@@ -162,13 +162,13 @@ extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::
     }	
 }
 
-
+/*
 #[no_mangle]
 extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::nvme_dev) -> bindings::blk_status_t {
     unsafe{
-
+        
+        println!("LOG : init_iod entry point");
         let mut iod : *mut bindings::nvme_iod = (rq.offset(1)) as *mut bindings::nvme_iod;
-
         let mut nseg : i32 = blk_rq_nr_phys_segments(rq) as i32;
         let mut size : u32 = blk_rq_payload_bytes(rq);
 
@@ -177,15 +177,19 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
         
         if (nseg > 2 || size > ( 2 * ((*dev).ctrl).page_size)) {
             let mut alloc_size : c_types::c_size_t = nvme_pci_iod_alloc_size(dev, size, nseg as u32, (*iod).use_sgl) as c_types::c_size_t;
-
-            (*iod).sg = bindings::kmalloc(alloc_size, bindings::GFP_ATOMIC);
-            if((*iod).sg == 0){
+            (*iod).sg = kmalloc_wrapper(alloc_size, bindings::GFP_ATOMIC) as *mut bindings::scatterlist;
+            if((*iod).sg == (0 as *mut bindings::scatterlist)){
                 return 9;
             }
         } else {
-            (*iod).sg = (*iod).inline_sg;
-        }
+            //let mut tmp : *mut c_types::c_void = (*iod).inline_sg as *mut c_types::c_void;
+            //(*iod).sg = tmp as *mut bindings::scatterlist;
+            //    (*iod).sg = (*iod).inline_sg as mut bindings::scatterlist;
+            println!("LOG : nvme_init_iod else is called!");
+  //          (*iod).sg = iod.offset(core::mem::size_of::<bindings::nvme_iod>() as isize) as *mut bindings::scatterlist;
 
+        }
+        println!("LOG : init_iod exit point");
         (*iod).aborted = 0;
         (*iod).npages = -1;
         (*iod).nents = 0;
@@ -194,7 +198,7 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
         return 0;
     }
 }
-
+*/
 
 
 /*

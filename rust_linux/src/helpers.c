@@ -3715,6 +3715,14 @@ struct nvme_queue {
 	u32 *dbbuf_cq_ei;
 };
 
+void *kmalloc_wrapper(size_t size, gfp_t flags)
+{
+    return kmalloc(size, flags);
+}
+
+
+
+
 /*
  * The nvme_iod describes the data in an I/O, including the list of PRP
  * entries.  You can't see it in this data structure because C doesn't let
@@ -4005,7 +4013,10 @@ int nvme_npages(unsigned size, struct nvme_dev *dev)
 	return true;
 }
 
-/*
+//void *convert_to_void(void * item)
+
+
+
   blk_status_t nvme_init_iod(struct request *rq, struct nvme_dev *dev)
 {
 	struct nvme_iod *iod = blk_mq_rq_to_pdu(rq);
@@ -4018,10 +4029,17 @@ int nvme_npages(unsigned size, struct nvme_dev *dev)
 		size_t alloc_size = nvme_pci_iod_alloc_size(dev, size, nseg,
 				iod->use_sgl);
 
-		iod->sg = kmalloc(alloc_size, GFP_ATOMIC);
+		iod->sg = kmalloc_wrapper(alloc_size, GFP_ATOMIC);
+		//printk("LOG : GFP_ATOMIC : %d\n",GFP_ATOMIC);
 		if (!iod->sg)
 			return BLK_STS_RESOURCE;
 	} else {
+		printk("LOG: SIZE_OF_IOD : %d\n",sizeof(struct nvme_iod));
+		printk("LOG: ADDRESS_OF_IOD : %p\n",iod);
+		printk("LOG: ADDRESS_OF_SG : %p\n",&(iod->sg));
+		printk("LOG: ADDRESS_OF_SG_INLINE : %p\n",&(iod->inline_sg));
+
+	//	printk("ELSE IS CALLED!!\n");
 		iod->sg = iod->inline_sg;
 	}
 
@@ -4032,7 +4050,7 @@ int nvme_npages(unsigned size, struct nvme_dev *dev)
 
 	return BLK_STS_OK;
 }
-*/
+
 
 
   void nvme_free_iod(struct nvme_dev *dev, struct request *req)

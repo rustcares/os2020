@@ -12,3 +12,4 @@ mod bindings {
 pub use bindings::*;
 
 pub const GFP_KERNEL: gfp_t = BINDINGS_GFP_KERNEL;
+pub const GFP_ATOMIC: gfp_t = BINDINGS_GFP_ATOMIC;

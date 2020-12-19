@@ -51281,6 +51281,7 @@ impl Default for nvmf_ctrl_options {
     }
 }
 pub const BINDINGS_GFP_KERNEL: gfp_t = 20971712;
+pub const BINDINGS_GFP_ATOMIC: gfp_t = 17301536;
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct module_sect_attrs {
