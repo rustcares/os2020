@@ -4539,21 +4539,6 @@ extern void nvme_pci_complete_rq(struct request *req);
 
 
 extern irqreturn_t nvme_irq(int irq, void *data);
-/*
-  irqreturn_t nvme_irq(int irq, void *data)
-{
-	irqreturn_t result;
-	struct nvme_queue *nvmeq = data;
-	spin_lock(&nvmeq->q_lock);
-	nvme_process_cq(nvmeq);
-	result = nvmeq->cqe_seen ? IRQ_HANDLED : IRQ_NONE;
-	nvmeq->cqe_seen = 0;
-	spin_unlock(&nvmeq->q_lock);
-	return result;
-}
-
-*/
-
 
   irqreturn_t nvme_irq_check(int irq, void *data)
 {
