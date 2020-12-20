@@ -61,6 +61,17 @@ extern "C" {
         fn blk_queue_dying_wrapper(q : *mut bindings::request_queue) -> i32;
 #[no_mangle]
         fn nvme_error_status(req : *mut bindings::request) -> bindings::blk_status_t;
+#[no_mangle]
+	fn nvme_process_cq(nvmeq : *mut bindings::nvme_queue );
+
+#[no_mangle]
+	fn spin_unlock_wrapper(lock : *mut bindings::spinlock_t );
+#[no_mangle]
+	fn spin_lock_wrapper(lock : *mut bindings::spinlock_t );
+
+
+
+
 }
 
 pub fn nvme_init_fn() -> c_types::c_int {
@@ -156,7 +167,6 @@ extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::
             }
             _ =>
             {
-                println!("[LOG] : nvme_setup_cmd")
             }
         }
 
@@ -170,7 +180,6 @@ extern "C" fn nvme_setup_cmd( ns : *mut bindings::nvme_ns, req : *mut bindings::
 extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::nvme_dev) -> bindings::blk_status_t {
     unsafe{
         
-        println!("LOG : init_iod entry point");
         let mut iod : *mut bindings::nvme_iod = (rq.offset(1)) as *mut bindings::nvme_iod;
         let mut nseg : i32 = blk_rq_nr_phys_segments(rq) as i32;
         let mut size : u32 = blk_rq_payload_bytes(rq);
@@ -182,14 +191,11 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
             let mut alloc_size : c_types::c_size_t = nvme_pci_iod_alloc_size(dev, size, nseg as u32, (*iod).use_sgl) as c_types::c_size_t;
             (*iod).sg = kmalloc_wrapper(alloc_size, bindings::GFP_ATOMIC) as *mut bindings::scatterlist;
             if((*iod).sg == (0 as *mut bindings::scatterlist)){
-		println!("LOG Kmalloc Failed");
                 return 9;
             }
         } else {
-            println!("LOG : nvme_init_iod else is called!");
 	    helper_func1(iod);
         }
-        println!("LOG : init_iod exit point");
         (*iod).aborted = 0;
         (*iod).npages = -1;
         (*iod).nents = 0;
@@ -204,7 +210,6 @@ extern "C" fn nvme_init_iod( rq : *mut bindings::request, dev : *mut bindings::n
 #[no_mangle]
 extern "C" fn nvme_pci_complete_rq ( req : *mut bindings::request )  {
 
-println!("nvme_pci_complete_rq");
         unsafe{
                 let mut iod : *mut bindings::nvme_iod = blk_mq_rq_to_pdu(req) as *mut bindings::nvme_iod;
                 nvme_unmap_data( (*((*iod).nvmeq)).dev , req);
@@ -216,30 +221,52 @@ println!("nvme_pci_complete_rq");
 #[no_mangle]
 extern "C" fn nvme_complete_rq ( req : *mut bindings::request )  {
 
-println!("nvme_complete_rq");
-
 unsafe{
 
   if (*nvme_req(req)).status != 0 && nvme_req_needs_retry(req) != 0 {
 
         if nvme_req_needs_failover(req) {
                 nvme_failover_req(req);
-		println!("nvme_req_needs_failover");
                 return;
         }
 
         if ((blk_queue_dying_wrapper((*req).q) == 0)) {
               (*nvme_req(req)).retries = (*nvme_req(req)).retries + 1;
               bindings::blk_mq_requeue_request(req, true);
-	      println!("blk_mq_requeue_request");
               return;
         }
   }
-	println!("blk_mq_end_request");
         bindings::blk_mq_end_request(req, nvme_error_status(req));
 
 }
 }
+
+
+#[no_mangle]
+extern "C" fn nvme_irq( irq : i32 , data : *mut core::ffi::c_void ) -> bindings::irqreturn_t {
+
+	unsafe {
+	        let mut result : bindings::irqreturn_t;
+		let mut nvmeq : *mut bindings::nvme_queue  = data as *mut bindings::nvme_queue;
+		spin_lock_wrapper(&mut ((*nvmeq).q_lock));
+		nvme_process_cq(nvmeq);
+
+		if ((*nvmeq).cqe_seen == 1) {
+
+			result = bindings::irqreturn_IRQ_HANDLED;
+		} else {
+
+			result = bindings::irqreturn_IRQ_NONE;
+		}
+
+		(*nvmeq).cqe_seen = 0;
+		spin_unlock_wrapper(&mut((*nvmeq).q_lock));
+		return result;
+	}
+}
+
+
+
 
 
 

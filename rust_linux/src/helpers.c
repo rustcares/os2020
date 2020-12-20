@@ -55,7 +55,7 @@ _Static_assert(__builtin_types_compatible_p(size_t, uintptr_t),
 #include <linux/t10-pi.h>
 #include <linux/pm_qos.h>
 #include <asm/unaligned.h>
-
+#include <linux/ktime.h>
 #include "c_headers/nvme.h"
 #include "c_headers/fabrics.h"
 
@@ -4404,6 +4404,11 @@ out:
 	struct nvme_command cmnd;
 	blk_status_t ret;
 
+
+	//ktime_t start,end;
+
+	//start =ktime_get();
+
 	ret = nvme_setup_cmd(ns, req, &cmnd);
 	if (ret)
 		return ret;
@@ -4429,7 +4434,14 @@ out:
 	__nvme_submit_cmd(nvmeq, &cmnd);
 	nvme_process_cq(nvmeq);
 	spin_unlock_irq(&nvmeq->q_lock);
+
+
+	//end = ktime_get();
+	//printk(KERN_INFO"%ld", end - start);
+
 	return BLK_STS_OK;
+
+
 out_cleanup_iod:
 	nvme_free_iod(dev, req);
 out_free_cmd:
@@ -4525,6 +4537,9 @@ extern void nvme_pci_complete_rq(struct request *req);
 		nvme_ring_cq_doorbell(nvmeq);
 }
 
+
+extern irqreturn_t nvme_irq(int irq, void *data);
+/*
   irqreturn_t nvme_irq(int irq, void *data)
 {
 	irqreturn_t result;
@@ -4536,6 +4551,9 @@ extern void nvme_pci_complete_rq(struct request *req);
 	spin_unlock(&nvmeq->q_lock);
 	return result;
 }
+
+*/
+
 
   irqreturn_t nvme_irq_check(int irq, void *data)
 {
@@ -6320,7 +6338,14 @@ void helper_func1( struct nvme_iod *iod){
 }
 
 int blk_queue_dying_wrapper( struct request_queue * req   ){
-
 	return	blk_queue_dying(req);
-
 }
+
+void spin_lock_wrapper(spinlock_t * lock ){
+	spin_lock(lock);
+}
+
+void spin_unlock_wrapper(spinlock_t * lock){
+	spin_unlock(lock);
+}
+

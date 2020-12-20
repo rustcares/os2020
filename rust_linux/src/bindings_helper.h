@@ -12,6 +12,7 @@
 #include <linux/blk_types.h>
 #include <linux/nvme.h>
 #include <linux/compiler_types.h>
+#include <linux/spinlock.h>
 //#include <linux/pci.c>
 
 //NVME Support
